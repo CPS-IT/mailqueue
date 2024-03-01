@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<div id="queue-item-{iterator.cycle}-modal"
+         class="modal fade modal-severity-danger modal-style-default modal-size-default text-start"
+         tabindex="-1"
+         aria-modal="true"
+         role="dialog"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{f:translate(key: 'modal.failureDetails.header', extensionName: 'Mailqueue')}</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">
+                    <c:icon identifier="actions-close" size="small" />
+                    <span class="visually-hidden">{f:translate(key: 'aria.close', extensionName: 'Mailqueue')}</span>
+                </button>
+            </div>
+            <div class="modal-body nowrap-disabled">
+                <p>
+                    <strong>{queueItem.failure.exception}</strong><br>
+                    {queueItem.failure.message}
+                </p>
+                <p class="text-black-50">
+                    <f:render partial="Date" arguments="{date: queueItem.failure.date}" />
+                    &middot; {queueItem.id}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <f:be.link route="system_mailqueue" parameters="{send: queueItem.id}" class="btn btn-default">
+                    <c:icon identifier="actions-paperplane" />
+                    <f:translate key="button.retry" extensionName="Mailqueue" />
+                </f:be.link>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

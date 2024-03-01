@@ -1,0 +1,16 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:comment><!-- target="_blank" is required to avoid issues with CSP --></f:comment>
+<a href="mailto:{address.address}" target="_blank" title="{address.address}"><f:spaceless>
+    <f:if condition="{address.name} && !{skipName}">
+        <f:then>
+            {address.name} &lt;{address.address}&gt;
+        </f:then>
+        <f:else>
+            {address.address}
+        </f:else>
+    </f:if>
+</f:spaceless></a>
+
+</html>

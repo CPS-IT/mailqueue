@@ -1,0 +1,25 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  CPSIT\Typo3Mailqueue\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Enums/*'
+      - '../Classes/Exception/*'
+      - '../Classes/Mail/*'
+      - '../Classes/Traits/*'
+
+  CPSIT\Typo3Mailqueue\Controller\MailqueueModuleController:
+    # @todo Replace with #[AsController] attribute once support for TYPO3 v11 is dropped
+    tags: ['backend.controller']
+
+  CPSIT\Typo3Mailqueue\Command\ListQueueCommand:
+    # @todo Replace with #[AsCommand] attribute once support for TYPO3 v11 is dropped
+    tags:
+      - name: console.command
+        command: 'mailqueue:listqueue'
+        description: 'List all currently enqueued mails'
+        schedulable: false

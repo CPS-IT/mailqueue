@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+	<file source-language="en">
+		<header/>
+		<body>
+			<trans-unit id="header.list">
+				<source>Mail queue</source>
+			</trans-unit>
+			<trans-unit id="header.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="header.mails">
+				<source>Mails</source>
+			</trans-unit>
+
+			<trans-unit id="queue.table.header.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="queue.table.header.subject">
+				<source>Subject</source>
+			</trans-unit>
+			<trans-unit id="queue.table.header.recipients">
+				<source>Recipient(s)</source>
+			</trans-unit>
+			<trans-unit id="queue.table.header.sender">
+				<source>Sender</source>
+			</trans-unit>
+
+			<trans-unit id="queueItem.state.failed">
+				<source>Failed</source>
+			</trans-unit>
+			<trans-unit id="queueItem.state.queued">
+				<source>Queued</source>
+			</trans-unit>
+			<trans-unit id="queueItem.state.sending">
+				<source>Sending</source>
+			</trans-unit>
+			<trans-unit id="queueItem.state.late">
+				<source>Late</source>
+			</trans-unit>
+			<trans-unit id="queueItem.state.unknown">
+				<source>Unknown</source>
+			</trans-unit>
+
+			<trans-unit id="queueItem.subject.unknown">
+				<source>Unknown</source>
+			</trans-unit>
+
+			<trans-unit id="alert.unsupportedTransport.title">
+				<source>Unsupported mail transport</source>
+			</trans-unit>
+			<trans-unit id="alert.unsupportedTransport.message">
+				<source>The configured mail transport "%s" is not supported. Please configure a mail spooler as mail transport.</source>
+			</trans-unit>
+			<trans-unit id="alert.emptyQueue.title">
+				<source>Queue is empty</source>
+			</trans-unit>
+			<trans-unit id="alert.emptyQueue.message">
+				<source>There are currently no mails enqueued for further transport.</source>
+			</trans-unit>
+			<trans-unit id="alert.failedTransports.message">
+				<source>At least one mail could not be sent. You may check your mail transport and verify if everything works as intended.</source>
+			</trans-unit>
+			<trans-unit id="alert.stuckTransport.message">
+				<source>It seems like some mails were not sent for at least 30 minutes. Make sure to periodically flush the mail queue.</source>
+			</trans-unit>
+			<trans-unit id="alert.noIssues.message">
+				<source>The mail queue seems to be healthy. Make sure to periodically flush it.</source>
+			</trans-unit>
+			<trans-unit id="alert.queueItemCount.message">
+				<source>Total mails in queue: %d</source>
+			</trans-unit>
+			<trans-unit id="alert.sendResult.alreadySent.message">
+				<source>The mail was already sent and is no longer enqueued.</source>
+			</trans-unit>
+			<trans-unit id="alert.sendResult.failed.message">
+				<source>The mail could not be sent.</source>
+			</trans-unit>
+			<trans-unit id="alert.sendResult.sent.message">
+				<source>The mail was successfully sent.</source>
+			</trans-unit>
+
+			<trans-unit id="modal.failureDetails.header">
+				<source>Transport failure details</source>
+			</trans-unit>
+
+			<trans-unit id="humanDate.now">
+				<source>now</source>
+			</trans-unit>
+			<trans-unit id="humanDate.seconds">
+				<source>a few seconds ago</source>
+			</trans-unit>
+			<trans-unit id="humanDate.minute">
+				<source>%d minute ago</source>
+			</trans-unit>
+			<trans-unit id="humanDate.minutes">
+				<source>%d minutes ago</source>
+			</trans-unit>
+			<trans-unit id="humanDate.hour">
+				<source>%d hour ago</source>
+			</trans-unit>
+			<trans-unit id="humanDate.hours">
+				<source>%d hours ago</source>
+			</trans-unit>
+			<trans-unit id="humanDate.day">
+				<source>%d day ago</source>
+			</trans-unit>
+			<trans-unit id="humanDate.days">
+				<source>%d days ago</source>
+			</trans-unit>
+
+			<trans-unit id="aria.close">
+				<source>Close</source>
+			</trans-unit>
+
+			<trans-unit id="button.info">
+				<source>View info</source>
+			</trans-unit>
+			<trans-unit id="button.send">
+				<source>Send mail</source>
+			</trans-unit>
+			<trans-unit id="button.retry">
+				<source>Try again</source>
+			</trans-unit>
+			<trans-unit id="button.config">
+				<source>View mail configuration</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

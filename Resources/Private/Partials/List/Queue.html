@@ -1,0 +1,85 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+{queue -> f:count() -> f:variable(name: 'count')}
+
+<f:if condition="{sendResult}">
+    <f:switch expression="{sendResult.value}">
+        <f:case value="alreadySent">
+            <f:be.infobox state="1"
+                          message="{f:translate(key: 'alert.sendResult.alreadySent.message', extensionName: 'Mailqueue')}"
+            />
+        </f:case>
+        <f:case value="failed">
+            <f:be.infobox state="2"
+                          message="{f:translate(key: 'alert.sendResult.failed.message', extensionName: 'Mailqueue')}"
+            />
+        </f:case>
+        <f:case value="sent">
+            <f:be.infobox state="0"
+                          message="{f:translate(key: 'alert.sendResult.sent.message', extensionName: 'Mailqueue')}"
+            />
+        </f:case>
+    </f:switch>
+</f:if>
+
+<f:if condition="{count}">
+    <f:then>
+        <h2>{f:translate(key: 'header.status', extensionName: 'Mailqueue')}</h2>
+
+        <f:if condition="{failing}">
+            <f:be.infobox state="2"
+                          message="{f:translate(key: 'alert.failedTransports.message', extensionName: 'Mailqueue')}"
+            />
+        </f:if>
+        <f:if condition="{longestPendingInterval} > 1800">
+            <f:be.infobox state="1"
+                          message="{f:translate(key: 'alert.stuckTransport.message', extensionName: 'Mailqueue')}"
+            />
+        </f:if>
+        <f:if condition="!{failing} && {longestPendingInterval} < 1800">
+            <f:be.infobox state="0"
+                          message="{f:translate(key: 'alert.noIssues.message', extensionName: 'Mailqueue')}"
+            />
+        </f:if>
+
+        <h2>{f:translate(key: 'header.mails', extensionName: 'Mailqueue')}</h2>
+
+        <div class="callout callout-sm callout-default">
+            <div class="media">
+                <div class="media-body">
+                    <div class="callout-body">
+                        {f:translate(key: 'alert.queueItemCount.message', arguments: '{0: count}', extensionName: 'Mailqueue')}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-fit">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-icon align-top" colspan="2">{f:translate(key: 'queue.table.header.date', extensionName: 'Mailqueue')}</th>
+                        <th class="align-top">{f:translate(key: 'queue.table.header.subject', extensionName: 'Mailqueue')}</th>
+                        <th class="align-top">{f:translate(key: 'queue.table.header.recipients', extensionName: 'Mailqueue')}</th>
+                        <th class="align-top">{f:translate(key: 'queue.table.header.sender', extensionName: 'Mailqueue')}</th>
+                        <th class="align-top"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <f:for each="{queue}" as="queueItem" iteration="iterator">
+                        <f:render partial="List/QueueItem" arguments="{queueItem: queueItem, iterator: iterator}" />
+                    </f:for>
+                </tbody>
+            </table>
+        </div>
+    </f:then>
+    <f:else>
+        <f:be.infobox state="-1"
+                      title="{f:translate(key: 'alert.emptyQueue.title', extensionName: 'Mailqueue')}"
+                      message="{f:translate(key: 'alert.emptyQueue.message', arguments: '{0: unsupportedTransport}', extensionName: 'Mailqueue')}"
+        />
+    </f:else>
+</f:if>
+
+</html>
