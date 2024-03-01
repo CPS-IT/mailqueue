@@ -1,0 +1,116 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      xmlns:m="http://typo3.org/ns/CPSIT/Typo3Mailqueue/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<tr class="{f:render(section: 'rowClass', arguments: {state: queueItem.state, date: queueItem.date}) -> f:spaceless()}">
+    <td class="col-icon align-top">
+        <f:switch expression="{queueItem.state.value}">
+            <f:case value="failed">
+                <span class="badge badge-danger d-block">{f:translate(key: 'queueItem.state.failed', extensionName: 'Mailqueue')}</span>
+
+                <f:if condition="{queueItem.failure}">
+                    <f:render section="modal" arguments="{queueItem: queueItem, iterator: iterator}" />
+                </f:if>
+            </f:case>
+            <f:case value="queued">
+                <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= 1800">
+                    <f:then>
+                        <span class="badge badge-warning d-block">{f:translate(key: 'queueItem.state.late', extensionName: 'Mailqueue')}</span>
+                    </f:then>
+                    <f:else>
+                        <span class="badge badge-info d-block">{f:translate(key: 'queueItem.state.queued', extensionName: 'Mailqueue')}</span>
+                    </f:else>
+                </f:if>
+            </f:case>
+            <f:case value="sending">
+                <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= 1800">
+                    <f:then>
+                        <span class="badge badge-warning d-block">{f:translate(key: 'queueItem.state.late', extensionName: 'Mailqueue')}</span>
+                    </f:then>
+                    <f:else>
+                        <span class="badge badge-warning d-block">{f:translate(key: 'queueItem.state.sending', extensionName: 'Mailqueue')}</span>
+                    </f:else>
+                </f:if>
+            </f:case>
+            <f:defaultCase>
+                <span class="badge badge-notice d-block">{f:translate(key: 'queueItem.state.unknown', extensionName: 'Mailqueue')}</span>
+            </f:defaultCase>
+        </f:switch>
+    </td>
+    <td class="align-top">
+        <f:if condition="{queueItem.date}">
+            <f:render partial="Date" arguments="{date: queueItem.date}" />
+        </f:if>
+    </td>
+    <td class="align-top">
+        <f:if condition="{queueItem.message.message.subject}">
+            <f:then>
+                {queueItem.message.message.subject}
+            </f:then>
+            <f:else if="{queueItem.message.originalMessage.subject}">
+                {queueItem.message.originalMessage.subject}
+            </f:else>
+            <f:else>
+                <em>{f:translate(key: 'queueItem.subject.unknown', extensionName: 'Mailqueue')}</em>
+            </f:else>
+        </f:if>
+    </td>
+    <td class="align-top">
+        <f:for each="{queueItem.message.envelope.recipients}" as="recipient">
+            <f:render partial="Mail/Address" arguments="{address: recipient}" /><br>
+        </f:for>
+    </td>
+    <td class="align-top">
+        <f:render partial="Mail/Address" arguments="{address: queueItem.message.envelope.sender}" />
+    </td>
+    <td class="align-top nowrap col-control">
+        <f:if condition="{queueItem.state.value} == 'failed' && {queueItem.failure}">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#queue-item-{iterator.cycle}-modal">
+                    <c:icon identifier="actions-info" />
+                </button>
+            </div>
+        </f:if>
+    </td>
+</tr>
+
+<f:section name="rowClass">
+    <f:switch expression="{state.value}">
+        <f:case value="queued"><f:if condition="{date} && {date -> m:dateInterval()} >= 1800">warning</f:if></f:case>
+        <f:case value="failed">danger</f:case>
+        <f:case value="sending">warning</f:case>
+    </f:switch>
+</f:section>
+
+<f:section name="modal">
+    <div id="queue-item-{iterator.cycle}-modal"
+         class="modal fade modal-severity-danger modal-style-default modal-size-default text-start"
+         tabindex="-1"
+         aria-modal="true"
+         role="dialog"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{f:translate(key: 'modal.failureDetails.header', extensionName: 'Mailqueue')}</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal">
+                        <c:icon identifier="actions-close" size="small" />
+                        <span class="visually-hidden">{f:translate(key: 'aria.close', extensionName: 'Mailqueue')}</span>
+                    </button>
+                </div>
+                <div class="modal-body nowrap-disabled">
+                    <p>
+                        <strong>{queueItem.failure.exception}</strong><br>
+                        {queueItem.failure.message}
+                    </p>
+                    <p class="text-black-50">
+                        <f:render partial="Date" arguments="{date: queueItem.failure.date}" />
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+</html>

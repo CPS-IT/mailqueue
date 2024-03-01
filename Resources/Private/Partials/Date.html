@@ -1,0 +1,9 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:m="http://typo3.org/ns/CPSIT/Typo3Mailqueue/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<time datetime="{date -> f:format.date(format: 'Y-m-d\TH:i:s.vP')}" title="{date -> f:format.date(format: 'Y-m-d H:i:s')}">
+    {date -> m:format.humanDate()}
+</time>
+
+</html>
