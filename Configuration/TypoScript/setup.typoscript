@@ -1,0 +1,16 @@
+plugin.tx_mailqueue {
+  view {
+    templateRootPaths {
+      0 = EXT:mailqueue/Resources/Private/Templates
+      10 = {$plugin.tx_mailqueue.view.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:mailqueue/Resources/Private/Partials
+      10 = {$plugin.tx_mailqueue.view.partialRootPath}
+    }
+    layoutRootPaths {
+      0 = EXT:mailqueue/Resources/Private/Layouts
+      10 = {$plugin.tx_mailqueue.view.layoutRootPath}
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# customcategory=tx_mailqueue=Personio Jobs
+# customsubcategory=view=View
+
+plugin.tx_mailqueue {
+  view {
+    # cat=tx_mailqueue/view/10; type=string; label=Path to template root (FE)
+    templateRootPath =
+
+    # cat=tx_mailqueue/view/20; type=string; label=Path to template partials (FE)
+    partialRootPath =
+
+    # cat=tx_mailqueue/view/30; type=string; label=Path to template layouts (FE)
+    layoutRootPath =
+  }
+}

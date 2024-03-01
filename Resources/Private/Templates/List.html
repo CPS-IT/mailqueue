@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Module" />
+
+<f:section name="Content">
+    <h1>Mail queue</h1>
+
+    <f:if condition="{unsupportedTransport}">
+        <f:then>
+            <f:be.infobox state="2"
+                          title="{f:translate(key: 'alert.unsupportedTransport.title', extensionName: 'Mailqueue')}"
+                          message="{f:translate(key: 'alert.unsupportedTransport.message', arguments: '{0: unsupportedTransport}', extensionName: 'Mailqueue')}"
+            />
+        </f:then>
+        <f:else>
+            <f:render partial="List/Queue" arguments="{
+            failing: failing,
+            longestPendingInterval: longestPendingInterval,
+            queue: transport.mailQueue
+        }" />
+        </f:else>
+    </f:if>
+</f:section>
+
+</html>
