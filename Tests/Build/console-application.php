@@ -28,14 +28,18 @@ use TYPO3\CMS\Core;
 
 require dirname(__DIR__, 2) . '/.Build/vendor/autoload.php';
 
-$command = new Command\ListQueueCommand(
-    new Core\Mail\Mailer(
-        new Mailer\Transport\NullTransport(),
-    ),
+$mailer = new Core\Mail\Mailer(
+    new Mailer\Transport\NullTransport(),
 );
-$command->setName('mailqueue:listqueue');
+
+$flushCommand = new Command\FlushQueueCommand($mailer);
+$flushCommand->setName('mailqueue:flushqueue');
+
+$listCommand = new Command\ListQueueCommand($mailer);
+$listCommand->setName('mailqueue:listqueue');
 
 $application = new Console\Application();
-$application->add($command);
+$application->add($flushCommand);
+$application->add($listCommand);
 
 return $application;

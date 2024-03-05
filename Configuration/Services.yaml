@@ -16,6 +16,13 @@ services:
     # @todo Replace with #[AsController] attribute once support for TYPO3 v11 is dropped
     tags: ['backend.controller']
 
+  CPSIT\Typo3Mailqueue\Command\FlushQueueCommand:
+    # @todo Replace with #[AsCommand] attribute once support for TYPO3 v11 is dropped
+    tags:
+      - name: console.command
+        command: 'mailqueue:flushqueue'
+        description: 'Flush mail queue by sending mails using the configured real transport'
+
   CPSIT\Typo3Mailqueue\Command\ListQueueCommand:
     # @todo Replace with #[AsCommand] attribute once support for TYPO3 v11 is dropped
     tags:
