@@ -27,14 +27,14 @@ An extension for TYPO3 CMS that extends TYPO3's mail spooling functionality
 with an extended queueable mail transport interface. In addition, it provides
 an improved version of TYPO3's `FileSpooler`. In order to make mails in the
 mail queue visible, the extension provides an (admin-only) backend module and
-a console command.
+console commands to list and flush the mail queue.
 
 ## 🚀 Features
 
 * Extended interface for queueable mail transports
 * Improved queueable file transport with failure metadata
 * Backend module to list mails in queue
-* Console command to list mails in queue
+* Console command to list queue and flush mails
 * Compatible with TYPO3 11.5 LTS and 12.4 LTS
 
 ## 🔥 Installation
@@ -98,9 +98,27 @@ be used to get a quick overview about the health state of the mail queue.
 It also allows to dequeue single mails from the mail queue by sending them
 with the configured real transport.
 
-### Console command
+### Console commands
 
-![Screenshot console command](Documentation/Images/ScreenshotConsoleCommand.png)
+#### Flush queue
+
+![Screenshot "mailqueue:flushqueue" console command](Documentation/Images/ScreenshotFlushQueueCommand.png)
+
+The extension provides a console command to flush the mail queue:
+
+```bash
+typo3 mailqueue:flushqueue [-l|--limit] [-j|--json]
+```
+
+The number of mails to be sent can be limited with `--limit` (or `-l`). If
+no limit is passed, the whole mail queue is flushed.
+
+When using `--json` (or `-j`), user-oriented output is written to stderr and
+result messages are written in JSON format to stdout.
+
+#### List queue
+
+![Screenshot "mailqueue:listqueue" console command](Documentation/Images/ScreenshotListQueueCommand.png)
 
 The extension provides a console command to list enqueued mails:
 
