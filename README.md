@@ -85,6 +85,19 @@ methods to enqueue and dequeue mails:
   with the difference that it only dequeues the given mail queue item and leaves the
   rest of the queue untouched.
 
+#### Recoverable transports
+
+Next to the `QueueableTransport` interface there exists an extended interface
+[`CPSIT\Typo3Mailqueue\Mail\Transport\RecoverableTransport`](Classes/Mail/Transport/RecoverableTransport.php).
+It allows to recover stuck mails with a configured recover timeout:
+
+* ```php
+  public function recover(int $timeout = 900): void
+  ```
+  Recovers mails that are enqueued for longer than the given timeout (in seconds) and
+  are in "sending" state. Recovering a mail resets their mail state from "sending" to
+  "queued". They will then be sent again on dequeue or when the mail queue is flushed.
+
 ### Backend module
 
 > [!NOTE]

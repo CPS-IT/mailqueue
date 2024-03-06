@@ -42,7 +42,7 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
-final class QueueableFileTransport extends Core\Mail\FileSpool implements QueueableTransport
+final class QueueableFileTransport extends Core\Mail\FileSpool implements RecoverableTransport
 {
     public const FILE_SUFFIX_QUEUED = '.message';
     public const FILE_SUFFIX_SENDING = '.message.sending';
