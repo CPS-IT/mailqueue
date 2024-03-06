@@ -120,11 +120,14 @@ with the configured real transport.
 The extension provides a console command to flush the mail queue:
 
 ```bash
-typo3 mailqueue:flushqueue [-l|--limit] [-j|--json]
+typo3 mailqueue:flushqueue [-l|--limit] [-r|--recover-timeout] [-j|--json]
 ```
 
 The number of mails to be sent can be limited with `--limit` (or `-l`). If
 no limit is passed, the whole mail queue is flushed.
+
+For transports implementing the `RecoverableTransport` interface, the recover
+timeout can be configured with `--recover-timeout` (or `-r`).
 
 When using `--json` (or `-j`), user-oriented output is written to stderr and
 result messages are written in JSON format to stdout.
