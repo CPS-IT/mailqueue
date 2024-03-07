@@ -62,7 +62,7 @@
 				<source>At least one mail could not be sent. You may check your mail transport and verify if everything works as intended.</source>
 			</trans-unit>
 			<trans-unit id="alert.stuckTransport.message">
-				<source>It seems like some mails were not sent for at least 30 minutes. Make sure to periodically flush the mail queue.</source>
+				<source>It seems like some mails have been in the queue for some time. Make sure to periodically flush the mail queue.</source>
 			</trans-unit>
 			<trans-unit id="alert.noIssues.message">
 				<source>The mail queue seems to be healthy. Make sure to periodically flush it.</source>

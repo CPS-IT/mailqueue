@@ -183,9 +183,10 @@ $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = \Vendor\Extension\
 
 The following extension configuration options are available:
 
-| Configuration key             | Description                                                    | Required | Default |
-|-------------------------------|----------------------------------------------------------------|----------|---------|
-| **`pagination.itemsPerPage`** | Number of mails to display on a single page in backend module  | –        | `20`    |
+| Configuration key             | Description                                                               | Required | Default |
+|-------------------------------|---------------------------------------------------------------------------|----------|---------|
+| **`queue.delayThreshold`**    | Number in seconds after which a mail in the queue is considered "delayed" | –        | `1800`  |
+| **`pagination.itemsPerPage`** | Number of mails to display on a single page in backend module             | –        | `20`    |
 
 ## 🧑‍💻 Contributing
 

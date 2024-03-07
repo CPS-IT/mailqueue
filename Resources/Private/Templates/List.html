@@ -15,6 +15,7 @@
         </f:then>
         <f:else>
             <f:render partial="List/Queue" arguments="{
+                delayThreshold: delayThreshold,
                 failing: failing,
                 longestPendingInterval: longestPendingInterval,
                 pagination: pagination,
