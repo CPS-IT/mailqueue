@@ -1,0 +1,50 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:be.infobox state="2"
+              title="{f:translate(key: 'alert.unsupportedTransport.title', extensionName: 'Mailqueue')}"
+              message="{f:translate(key: 'alert.unsupportedTransport.message', arguments: '{0: transport}', extensionName: 'Mailqueue')}"
+/>
+
+<f:variable name="docsLink"><f:spaceless>
+    <a href="https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/Mail/Index.html#spooling"
+       target="_blank"
+       rel="noreferrer"
+    >{f:translate(key: 'unsupportedTransport.docs.linkText', extensionName: 'Mailqueue')}</a>
+</f:spaceless></f:variable>
+
+<p>
+    {f:translate(key: 'unsupportedTransport.docs.text', extensionName: 'Mailqueue', arguments: '{0: docsLink}') -> f:format.raw()}
+</p>
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-icon">
+            <c:icon identifier="actions-file-edit" />
+        </div>
+        <div class="card-header-body">
+            <h2 class="card-title">{f:translate(key: 'unsupportedTransport.example.header', extensionName: 'Mailqueue')}</h2>
+        </div>
+    </div>
+    <div class="card-body">
+        <pre><code><f:spaceless>
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = 'file';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_filepath'] = '/path/to/mailqueue';
+        </f:spaceless></code></pre>
+    </div>
+    <div class="card-footer">
+        <f:if condition="{typo3Version} >= 12">
+            <f:then>
+                <code>config/system/additional.php</code>
+            </f:then>
+            <f:else>
+                <f:comment><!-- @todo Remove once support for TYPO3 v11 is dropped --></f:comment>
+                <code>typo3conf/AdditionalConfiguration.php</code>
+            </f:else>
+        </f:if>
+    </div>
+</div>
+
+
+</html>

@@ -80,6 +80,16 @@
 				<source>The mail was successfully sent.</source>
 			</trans-unit>
 
+			<trans-unit id="unsupportedTransport.docs.text">
+				<source>Read the %s to learn more about mail spoolers in TYPO3.</source>
+			</trans-unit>
+			<trans-unit id="unsupportedTransport.docs.linkText">
+				<source>official documentation</source>
+			</trans-unit>
+			<trans-unit id="unsupportedTransport.example.header">
+				<source>Example configuration</source>
+			</trans-unit>
+
 			<trans-unit id="modal.failureDetails.header">
 				<source>Transport failure details</source>
 			</trans-unit>

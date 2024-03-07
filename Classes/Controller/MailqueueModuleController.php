@@ -65,6 +65,7 @@ final class MailqueueModuleController
         } else {
             $templateVariables = [
                 'unsupportedTransport' => $this->getTransportFromMailConfiguration(),
+                'typo3Version' => $this->typo3Version->getMajorVersion(),
             ];
         }
 
