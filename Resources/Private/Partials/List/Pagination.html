@@ -1,0 +1,117 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:if condition="{paginator.numberOfPages} > 1">
+    <tr>
+        <td colspan="6">
+            <nav class="mb-2 mt-2">
+                <span class="page-item ps-2 pe-2">
+                    <f:translate key="pagination.paginatedItems" extensionName="Mailqueue" arguments="{
+                        0: '{paginator.keyOfFirstPaginatedItem + 1}',
+                        1: '{paginator.keyOfLastPaginatedItem + 1}'
+                    }" />
+                    <span class="visually-hidden">,
+                        <f:translate key="pagination.pageRange" extensionName="Mailqueue" arguments="{
+                            0: paginator.currentPageNumber,
+                            1: pagination.lastPageNumber
+                        }" />
+                    </span>
+                </span>
+
+                <ul class="pagination d-inline-flex">
+                    <f:comment><!-- First/Previous page --></f:comment>
+                    <f:if condition="{pagination.previousPageNumber}">
+                        <f:then>
+                            <li class="page-item ps-2">
+                                <f:be.link route="system_mailqueue"
+                                           parameters="{page: pagination.firstPageNumber}"
+                                           title="{f:translate(key: 'aria.first', extensionName: 'Mailqueue')}"
+                                           aria="{label: '{f:translate(key: \'aria.first\', extensionName: \'Mailqueue\')}'}"
+                                >{c:icon(identifier: 'actions-view-paging-first')}</f:be.link>
+                            </li>
+                            <li class="page-item ps-2">
+                                <f:be.link route="system_mailqueue"
+                                           parameters="{page: pagination.previousPageNumber}"
+                                           title="{f:translate(key: 'aria.previous', extensionName: 'Mailqueue')}"
+                                           aria="{label: '{f:translate(key: \'aria.previous\', extensionName: \'Mailqueue\')}'}"
+                                >{c:icon(identifier: 'actions-view-paging-previous')}</f:be.link>
+                            </li>
+                        </f:then>
+                        <f:else>
+                            <li class="page-item ps-2" aria-hidden="true">
+                                {c:icon(identifier: 'actions-view-paging-first')}
+                            </li>
+                            <li class="page-item ps-2" aria-hidden="true">
+                                {c:icon(identifier: 'actions-view-paging-previous')}
+                            </li>
+                        </f:else>
+                    </f:if>
+
+                    <f:comment><!-- Page selector --></f:comment>
+                    <li class="page-item ps-2">
+                        <form action="{f:be.uri(route: 'system_mailqueue')}" method="post">
+                            <label>
+                                {f:translate(key: 'pagination.pageRange.start', extensionName: 'Mailqueue')}
+
+                                <input type="number"
+                                       autocomplete="off"
+                                       name="page"
+                                       min="{pagination.firstPageNumber}"
+                                       max="{pagination.lastPageNumber}"
+                                       value="{paginator.currentPageNumber}"
+                                       size="3"
+                                       class="form-control form-control-sm paginator-input"
+                                >
+                            </label>
+                            <span aria-hidden="true">
+                                <f:translate key="pagination.pageRange.end" extensionName="Mailqueue" arguments="{
+                                    0: pagination.lastPageNumber
+                                }" />
+                            </span>
+                        </form>
+                    </li>
+
+                    <f:comment><!-- Next/Last page --></f:comment>
+                    <f:if condition="{pagination.nextPageNumber}">
+                        <f:then>
+                            <li class="page-item ps-2">
+                                <f:be.link route="system_mailqueue"
+                                           parameters="{page: pagination.nextPageNumber}"
+                                           title="{f:translate(key: 'aria.next', extensionName: 'Mailqueue')}"
+                                           aria="{label: '{f:translate(key: \'aria.next\', extensionName: \'Mailqueue\')}'}"
+                                >{c:icon(identifier: 'actions-view-paging-next')}</f:be.link>
+                            </li>
+                            <li class="page-item ps-2">
+                                <f:be.link route="system_mailqueue"
+                                           parameters="{page: pagination.lastPageNumber}"
+                                           title="{f:translate(key: 'aria.last', extensionName: 'Mailqueue')}"
+                                           aria="{label: '{f:translate(key: \'aria.last\', extensionName: \'Mailqueue\')}'}"
+                                >{c:icon(identifier: 'actions-view-paging-last')}</f:be.link>
+                            </li>
+                        </f:then>
+                        <f:else>
+                            <li class="page-item ps-2" aria-hidden="true">
+                                {c:icon(identifier: 'actions-view-paging-next')}
+                            </li>
+                            <li class="page-item ps-2" aria-hidden="true">
+                                {c:icon(identifier: 'actions-view-paging-last')}
+                            </li>
+                        </f:else>
+                    </f:if>
+
+                    <f:comment><!-- Reload --></f:comment>
+                    <li class="page-item ps-2">
+                        <f:be.link route="system_mailqueue"
+                                   parameters="{page: paginator.currentPageNumber}"
+                                   title="{f:translate(key: 'aria.reload', extensionName: 'Mailqueue')}"
+                                   aria="{label: '{f:translate(key: \'aria.reload\', extensionName: \'Mailqueue\')}'}"
+                        >{c:icon(identifier: 'actions-refresh')}</f:be.link>
+                    </li>
+                </ul>
+            </nav>
+        </td>
+    </tr>
+</f:if>
+
+</html>

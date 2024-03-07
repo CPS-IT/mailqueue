@@ -67,10 +67,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <f:for each="{queue}" as="queueItem" iteration="iterator">
+                    <f:for each="{paginator.paginatedItems}" as="queueItem" iteration="iterator">
                         <f:render partial="List/QueueItem" arguments="{queueItem: queueItem, iterator: iterator}" />
                     </f:for>
                 </tbody>
+                <tfoot>
+                    <f:render partial="List/Pagination" arguments="{pagination: pagination, paginator: paginator}" />
+                </tfoot>
             </table>
         </div>
     </f:then>
