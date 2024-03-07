@@ -139,8 +139,8 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
     public function dequeue(Mail\Queue\MailQueueItem $item, Mailer\Transport\TransportInterface $transport): bool
     {
         $path = $this->path . DIRECTORY_SEPARATOR . $item->id;
-        $sendingPath = $this->getItemVariant($path, self::FILE_SUFFIX_SENDING);
-        $failurePath = $this->getItemVariant($path, self::FILE_SUFFIX_FAILURE_DATA);
+        $sendingPath = $this->getFileVariant($path, self::FILE_SUFFIX_SENDING);
+        $failurePath = $this->getFileVariant($path, self::FILE_SUFFIX_FAILURE_DATA);
 
         // We try a rename, it's an atomic operation, and avoid locking the file
         if ($path !== $sendingPath && !rename($path, $sendingPath)) {
@@ -176,7 +176,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
     private function flagFailedTransport(string $file, Mailer\Exception\TransportExceptionInterface $exception): void
     {
         $failure = Mail\TransportFailure::fromException($exception);
-        $failurePath = $this->getItemVariant($file, self::FILE_SUFFIX_FAILURE_DATA);
+        $failurePath = $this->getFileVariant($file, self::FILE_SUFFIX_FAILURE_DATA);
 
         file_put_contents($failurePath, serialize($failure));
     }
@@ -248,7 +248,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
 
     private function findFailureMetadata(string $file): ?Mail\TransportFailure
     {
-        $failurePath = $this->getItemVariant($file, self::FILE_SUFFIX_FAILURE_DATA);
+        $failurePath = $this->getFileVariant($file, self::FILE_SUFFIX_FAILURE_DATA);
 
         try {
             return Mail\TransportFailure::fromFile($failurePath);
@@ -257,7 +257,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         }
     }
 
-    private function getItemVariant(string $file, string $suffix): string
+    private function getFileVariant(string $file, string $suffix): string
     {
         $variants = array_diff(
             [
@@ -268,10 +268,12 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
             [$suffix],
         );
 
-        return (string)preg_replace(
-            sprintf('/(%s)$/', implode('|', array_map('preg_quote', $variants))),
-            $suffix,
-            $file,
-        );
+        foreach ($variants as $variant) {
+            if (str_ends_with($file, $variant)) {
+                return substr_replace($file, $suffix, -mb_strlen($variant));
+            }
+        }
+
+        return $file;
     }
 }
