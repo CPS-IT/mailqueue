@@ -21,30 +21,44 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace CPSIT\Typo3Mailqueue\Mail\Iterator;
+namespace CPSIT\Typo3Mailqueue\Iterator;
 
-use CPSIT\Typo3Mailqueue\Mail;
 use FilterIterator;
+use Iterator;
 use SplFileInfo;
 use Traversable;
 
 /**
- * FileIterator
+ * LimitedFileIterator
  *
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  *
- * @template-extends FilterIterator<int, SplFileInfo, Traversable<SplFileInfo>>
+ * @extends FilterIterator<int, SplFileInfo, Traversable<SplFileInfo>>
  */
-final class FileIterator extends FilterIterator
+final class LimitedFileIterator extends FilterIterator
 {
+    /**
+     * @param list<string> $acceptedSuffixes
+     */
+    public function __construct(
+        Iterator $iterator,
+        private readonly array $acceptedSuffixes,
+    ) {
+        parent::__construct($iterator);
+    }
+
     public function accept(): bool
     {
         $file = $this->getInnerIterator()->current();
         $path = $file->getRealPath();
 
-        return str_ends_with($path, Mail\Transport\QueueableFileTransport::FILE_SUFFIX_QUEUED)
-            || str_ends_with($path, Mail\Transport\QueueableFileTransport::FILE_SUFFIX_SENDING)
-        ;
+        foreach ($this->acceptedSuffixes as $suffix) {
+            if (str_ends_with($path, $suffix)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
