@@ -79,6 +79,9 @@
 			<trans-unit id="alert.sendResult.sent.message">
 				<source>The mail was successfully sent.</source>
 			</trans-unit>
+			<trans-unit id="alert.deleteResult.deleted.message">
+				<source>The mail was successfully deleted.</source>
+			</trans-unit>
 
 			<trans-unit id="unsupportedTransport.docs.text">
 				<source>Read the %s to learn more about mail spoolers in TYPO3.</source>
@@ -92,6 +95,12 @@
 
 			<trans-unit id="modal.failureDetails.header">
 				<source>Transport failure details</source>
+			</trans-unit>
+			<trans-unit id="modal.delete.header">
+				<source>Delete this mail?</source>
+			</trans-unit>
+			<trans-unit id="modal.delete.text">
+				<source>Are you sure you want to delete '%s'?</source>
 			</trans-unit>
 
 			<trans-unit id="humanDate.now">
@@ -149,6 +158,12 @@
 			</trans-unit>
 			<trans-unit id="button.config">
 				<source>View mail configuration</source>
+			</trans-unit>
+			<trans-unit id="button.delete">
+				<source>Delete mail</source>
+			</trans-unit>
+			<trans-unit id="button.cancel">
+				<source>Cancel</source>
 			</trans-unit>
 
 			<trans-unit id="pagination.paginatedItems">

@@ -66,6 +66,17 @@ final class QueueableMemoryTransport extends Core\Mail\MemorySpool implements Qu
         return true;
     }
 
+    public function delete(Mail\Queue\MailQueueItem $item): bool
+    {
+        if (!isset($this->queuedMessages[$item->id])) {
+            return false;
+        }
+
+        unset($this->queuedMessages[$item->id]);
+
+        return true;
+    }
+
     public function getMailQueue(): Mail\Queue\MailQueue
     {
         return new Mail\Queue\MailQueue(

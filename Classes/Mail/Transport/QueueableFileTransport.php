@@ -166,6 +166,24 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         return true;
     }
 
+    public function delete(Mail\Queue\MailQueueItem $item): bool
+    {
+        $path = $this->path . DIRECTORY_SEPARATOR . $item->id;
+        $failurePath = $this->getFileVariant($path, self::FILE_SUFFIX_FAILURE_DATA);
+
+        // Early return if message no longer exists in queue
+        if (!file_exists($path)) {
+            return false;
+        }
+
+        // Remove failure metadata
+        if (file_exists($failurePath)) {
+            unlink($failurePath);
+        }
+
+        return unlink($path);
+    }
+
     public function getMailQueue(): Mail\Queue\MailQueue
     {
         return new Mail\Queue\MailQueue(

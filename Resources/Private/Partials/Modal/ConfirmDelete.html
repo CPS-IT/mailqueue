@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<div id="queue-item-{iterator.cycle}-delete-modal"
+         class="modal fade modal-severity-warning modal-style-default modal-size-default text-start"
+         tabindex="-1"
+         aria-modal="true"
+         role="dialog"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{f:translate(key: 'modal.delete.header', extensionName: 'Mailqueue')}</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">
+                    <c:icon identifier="actions-close" size="small" />
+                    <span class="visually-hidden">{f:translate(key: 'aria.close', extensionName: 'Mailqueue')}</span>
+                </button>
+            </div>
+            <div class="modal-body nowrap-disabled">
+                <p>
+                    <f:translate key="modal.delete.text" extensionName="Mailqueue" arguments="{
+                        0: '{f:if(condition: queueItem.message.message.subject, then: queueItem.message.message.subject, else: queueItem.message.originalMessage.subject)}'
+                    }" />
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">
+                    <f:translate key="button.cancel" extensionName="Mailqueue" />
+                </button>
+
+                <f:be.link route="system_mailqueue" parameters="{delete: queueItem.id}" class="btn btn-warning">
+                    <f:translate key="button.delete" extensionName="Mailqueue" />
+                </f:be.link>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
