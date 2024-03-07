@@ -25,6 +25,7 @@ namespace CPSIT\Typo3Mailqueue\Mail\Transport;
 
 use CPSIT\Typo3Mailqueue\Enums;
 use CPSIT\Typo3Mailqueue\Exception;
+use CPSIT\Typo3Mailqueue\Iterator;
 use CPSIT\Typo3Mailqueue\Mail;
 use DateTimeImmutable;
 use DirectoryIterator;
@@ -44,9 +45,9 @@ use TYPO3\CMS\Core;
  */
 final class QueueableFileTransport extends Core\Mail\FileSpool implements RecoverableTransport
 {
-    public const FILE_SUFFIX_QUEUED = '.message';
-    public const FILE_SUFFIX_SENDING = '.message.sending';
-    public const FILE_SUFFIX_FAILURE_DATA = '.message.failure';
+    private const FILE_SUFFIX_QUEUED = '.message';
+    private const FILE_SUFFIX_SENDING = '.message.sending';
+    private const FILE_SUFFIX_FAILURE_DATA = '.message.failure';
 
     private readonly Core\Context\Context $context;
 
@@ -185,7 +186,13 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
      */
     private function initializeQueueFromFilePath(): Generator
     {
-        $iterator = new Mail\Iterator\FileIterator(new DirectoryIterator($this->path));
+        $iterator = new Iterator\LimitedFileIterator(
+            new DirectoryIterator($this->path),
+            [
+                self::FILE_SUFFIX_QUEUED,
+                self::FILE_SUFFIX_SENDING,
+            ],
+        );
 
         foreach ($iterator as $file) {
             yield $this->restoreItem($file);
