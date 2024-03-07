@@ -14,7 +14,7 @@
                 </f:if>
             </f:case>
             <f:case value="queued">
-                <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= 1800">
+                <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= {delayThreshold}">
                     <f:then>
                         <span class="badge badge-warning d-block">{f:translate(key: 'queueItem.state.late', extensionName: 'Mailqueue')}</span>
                     </f:then>
@@ -24,7 +24,7 @@
                 </f:if>
             </f:case>
             <f:case value="sending">
-                <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= 1800">
+                <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= {delayThreshold}">
                     <f:then>
                         <span class="badge badge-warning d-block">{f:translate(key: 'queueItem.state.late', extensionName: 'Mailqueue')}</span>
                     </f:then>
@@ -86,7 +86,7 @@
 
 <f:section name="rowClass">
     <f:switch expression="{state.value}">
-        <f:case value="queued"><f:if condition="{date} && {date -> m:dateInterval()} >= 1800">warning</f:if></f:case>
+        <f:case value="queued"><f:if condition="{date} && {date -> m:dateInterval()} >= {delayThreshold}">warning</f:if></f:case>
         <f:case value="failed">danger</f:case>
         <f:case value="sending">warning</f:case>
     </f:switch>

@@ -99,6 +99,7 @@ final class MailqueueModuleController
 
     /**
      * @return array{
+     *     delayThreshold: positive-int,
      *     failing: bool,
      *     longestPendingInterval: non-negative-int,
      *     pagination: Core\Pagination\SimplePagination,
@@ -140,6 +141,7 @@ final class MailqueueModuleController
         $pagination = new Core\Pagination\SimplePagination($paginator);
 
         return [
+            'delayThreshold' => $this->extensionConfiguration->getQueueDelayThreshold(),
             'failing' => $failing,
             'longestPendingInterval' => $longestPendingInterval,
             'pagination' => $pagination,

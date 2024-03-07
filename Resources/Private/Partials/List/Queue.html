@@ -32,12 +32,12 @@
                           message="{f:translate(key: 'alert.failedTransports.message', extensionName: 'Mailqueue')}"
             />
         </f:if>
-        <f:if condition="{longestPendingInterval} > 1800">
+        <f:if condition="{longestPendingInterval} > {delayThreshold}">
             <f:be.infobox state="1"
                           message="{f:translate(key: 'alert.stuckTransport.message', extensionName: 'Mailqueue')}"
             />
         </f:if>
-        <f:if condition="!{failing} && {longestPendingInterval} < 1800">
+        <f:if condition="!{failing} && {longestPendingInterval} < {delayThreshold}">
             <f:be.infobox state="0"
                           message="{f:translate(key: 'alert.noIssues.message', extensionName: 'Mailqueue')}"
             />

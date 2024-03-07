@@ -1,2 +1,5 @@
+# cat=queue//10; type=int+; label=Number in seconds after which a mail in the queue is considered "delayed"
+queue.delayThreshold = 1800
+
 # cat=pagination//10; type=int+; label=Number of mails to display on a single page in backend module list pagination
 pagination.itemsPerPage = 20

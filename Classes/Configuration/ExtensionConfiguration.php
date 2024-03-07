@@ -34,12 +34,34 @@ use TYPO3\CMS\Core;
  */
 final class ExtensionConfiguration
 {
+    private const DEFAULT_DELAY_THRESHOLD = 1800;
     private const DEFAULT_ITEMS_PER_PAGE = 20;
 
     public function __construct(
         private readonly Core\Configuration\ExtensionConfiguration $configuration,
     ) {}
 
+    /**
+     * @return positive-int
+     */
+    public function getQueueDelayThreshold(): int
+    {
+        try {
+            $delayThreshold = $this->configuration->get(Extension::KEY, 'queue/delayThreshold');
+        } catch (Core\Exception) {
+            return self::DEFAULT_DELAY_THRESHOLD;
+        }
+
+        if (!is_scalar($delayThreshold)) {
+            return self::DEFAULT_DELAY_THRESHOLD;
+        }
+
+        return max(1, (int)$delayThreshold);
+    }
+
+    /**
+     * @return positive-int
+     */
     public function getItemsPerPage(): int
     {
         try {
