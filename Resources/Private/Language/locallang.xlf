@@ -122,6 +122,21 @@
 			<trans-unit id="aria.close">
 				<source>Close</source>
 			</trans-unit>
+			<trans-unit id="aria.first">
+				<source>First</source>
+			</trans-unit>
+			<trans-unit id="aria.previous">
+				<source>Previous</source>
+			</trans-unit>
+			<trans-unit id="aria.last">
+				<source>Last</source>
+			</trans-unit>
+			<trans-unit id="aria.next">
+				<source>Next</source>
+			</trans-unit>
+			<trans-unit id="aria.reload">
+				<source>Reload</source>
+			</trans-unit>
 
 			<trans-unit id="button.info">
 				<source>View info</source>
@@ -134,6 +149,19 @@
 			</trans-unit>
 			<trans-unit id="button.config">
 				<source>View mail configuration</source>
+			</trans-unit>
+
+			<trans-unit id="pagination.paginatedItems">
+				<source>Mails %d - %d</source>
+			</trans-unit>
+			<trans-unit id="pagination.pageRange">
+				<source>Page %d of %d</source>
+			</trans-unit>
+			<trans-unit id="pagination.pageRange.start">
+				<source>Page</source>
+			</trans-unit>
+			<trans-unit id="pagination.pageRange.end">
+				<source>of %d</source>
 			</trans-unit>
 		</body>
 	</file>

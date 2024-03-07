@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace CPSIT\Typo3Mailqueue\Controller;
 
+use CPSIT\Typo3Mailqueue\Configuration;
 use CPSIT\Typo3Mailqueue\Enums;
 use CPSIT\Typo3Mailqueue\Exception;
 use CPSIT\Typo3Mailqueue\Mail;
@@ -46,6 +47,7 @@ final class MailqueueModuleController
     private readonly Core\Information\Typo3Version $typo3Version;
 
     public function __construct(
+        private readonly Configuration\ExtensionConfiguration $extensionConfiguration,
         private readonly Core\Imaging\IconFactory $iconFactory,
         private readonly Backend\Template\ModuleTemplateFactory $moduleTemplateFactory,
         private readonly Core\Mail\Mailer $mailer,
@@ -58,10 +60,18 @@ final class MailqueueModuleController
     {
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
+        $page = (int)($request->getQueryParams()['page'] ?? $request->getParsedBody()['page'] ?? 1);
         $sendId = $request->getQueryParams()['send'] ?? null;
 
+        // Force redirect when page selector was used
+        if ($request->getMethod() === 'POST' && !isset($request->getQueryParams()['page'])) {
+            return new Core\Http\RedirectResponse(
+                $this->uriBuilder->buildUriFromRoute('system_mailqueue', ['page' => $page]),
+            );
+        }
+
         if ($transport instanceof Mail\Transport\QueueableTransport) {
-            $templateVariables = $this->resolveTemplateVariables($transport, $sendId);
+            $templateVariables = $this->resolveTemplateVariables($transport, $page, $sendId);
         } else {
             $templateVariables = [
                 'unsupportedTransport' => $this->getTransportFromMailConfiguration(),
@@ -91,12 +101,15 @@ final class MailqueueModuleController
      * @return array{
      *     failing: bool,
      *     longestPendingInterval: non-negative-int,
+     *     pagination: Core\Pagination\SimplePagination,
+     *     paginator: Core\Pagination\ArrayPaginator,
+     *     queue: list<Mail\Queue\MailQueueItem>,
      *     sendResult: Enums\MailState|null,
-     *     transport: Mail\Transport\QueueableTransport,
      * }
      */
     private function resolveTemplateVariables(
         Mail\Transport\QueueableTransport $transport,
+        int $currentPageNumber = 1,
         string $sendId = null,
     ): array {
         $failing = false;
@@ -118,11 +131,21 @@ final class MailqueueModuleController
             }
         }
 
+        $queue = $transport->getMailQueue()->get();
+        $paginator = new Core\Pagination\ArrayPaginator(
+            $queue,
+            $currentPageNumber,
+            $this->extensionConfiguration->getItemsPerPage(),
+        );
+        $pagination = new Core\Pagination\SimplePagination($paginator);
+
         return [
             'failing' => $failing,
             'longestPendingInterval' => $longestPendingInterval,
+            'pagination' => $pagination,
+            'paginator' => $paginator,
+            'queue' => $queue,
             'sendResult' => $sendResult,
-            'transport' => $transport,
         ];
     }
 

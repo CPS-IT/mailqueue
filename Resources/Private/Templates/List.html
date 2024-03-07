@@ -17,7 +17,9 @@
             <f:render partial="List/Queue" arguments="{
                 failing: failing,
                 longestPendingInterval: longestPendingInterval,
-                queue: transport.mailQueue,
+                pagination: pagination,
+                paginator: paginator,
+                queue: queue,
                 sendResult: sendResult
             }" />
         </f:else>

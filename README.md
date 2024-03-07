@@ -53,7 +53,7 @@ Alternatively, you can download the extension via the
 ## ⚡ Usage
 
 > [!NOTE]
-> In order to use a queueable mail transport, you need to [configure](#-configuration)
+> In order to use a queueable mail transport, you need to [configure](#mail-settings)
 > it in your system settings, along with the required transport settings.
 
 ### Concept
@@ -160,6 +160,8 @@ native mail spoolers:
 
 ## 📂 Configuration
 
+### Mail settings
+
 Queueable mail transports are registered the "normal" way as described in the
 [official TYPO3 core documentation][3]. Add the following to your system configuration
 (e.g. in `additional.php`/`AdditionalConfiguration.php`):
@@ -176,6 +178,14 @@ $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = 'memory';
 # Note: Custom transports must implement CPSIT\Typo3Mailqueue\Mail\Transport\QueueableTransport interface!
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = \Vendor\Extension\Mail\Transport\CustomQueueableTransport::class;
 ```
+
+### Extension configuration
+
+The following extension configuration options are available:
+
+| Configuration key             | Description                                                    | Required | Default |
+|-------------------------------|----------------------------------------------------------------|----------|---------|
+| **`pagination.itemsPerPage`** | Number of mails to display on a single page in backend module  | –        | `20`    |
 
 ## 🧑‍💻 Contributing
 
