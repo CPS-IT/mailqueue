@@ -165,13 +165,16 @@ Queueable mail transports are registered the "normal" way as described in the
 (e.g. in `additional.php`/`AdditionalConfiguration.php`):
 
 ```php
-# Native mail transport
+# File transport
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = 'file';
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_filepath'] = '/path/to/mailqueue';
 
-# Custom mail transport
-$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type']
-    = \Vendor\Extension\Mail\Transport\CustomQueueableTransport::class;
+# Memory transport
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = 'memory';
+
+# Use any other custom mail transport
+# Note: Custom transports must implement CPSIT\Typo3Mailqueue\Mail\Transport\QueueableTransport interface!
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_type'] = \Vendor\Extension\Mail\Transport\CustomQueueableTransport::class;
 ```
 
 ## 🧑‍💻 Contributing
