@@ -85,6 +85,12 @@ methods to enqueue and dequeue mails:
   with the difference that it only dequeues the given mail queue item and leaves the
   rest of the queue untouched.
 
+* ```php
+  public function delete(Mail\Queue\MailQueueItem $item): bool
+  ```
+  Deletes the message of a given mail queue item without sending it. The message is
+  also dequeued from the mail queue.
+
 #### Recoverable transports
 
 Next to the `QueueableTransport` interface there exists an extended interface

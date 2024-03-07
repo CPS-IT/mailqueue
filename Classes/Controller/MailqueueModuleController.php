@@ -62,6 +62,7 @@ final class MailqueueModuleController
         $transport = $this->mailer->getTransport();
         $page = (int)($request->getQueryParams()['page'] ?? $request->getParsedBody()['page'] ?? 1);
         $sendId = $request->getQueryParams()['send'] ?? null;
+        $deleteId = $request->getQueryParams()['delete'] ?? null;
 
         // Force redirect when page selector was used
         if ($request->getMethod() === 'POST' && !isset($request->getQueryParams()['page'])) {
@@ -71,7 +72,7 @@ final class MailqueueModuleController
         }
 
         if ($transport instanceof Mail\Transport\QueueableTransport) {
-            $templateVariables = $this->resolveTemplateVariables($transport, $page, $sendId);
+            $templateVariables = $this->resolveTemplateVariables($transport, $page, $sendId, $deleteId);
         } else {
             $templateVariables = [
                 'unsupportedTransport' => $this->getTransportFromMailConfiguration(),
@@ -100,6 +101,7 @@ final class MailqueueModuleController
     /**
      * @return array{
      *     delayThreshold: positive-int,
+     *     deleteResult: bool,
      *     failing: bool,
      *     longestPendingInterval: non-negative-int,
      *     pagination: Core\Pagination\SimplePagination,
@@ -112,14 +114,20 @@ final class MailqueueModuleController
         Mail\Transport\QueueableTransport $transport,
         int $currentPageNumber = 1,
         string $sendId = null,
+        string $deleteId = null,
     ): array {
         $failing = false;
         $longestPendingInterval = 0;
         $now = time();
         $sendResult = null;
+        $deleteResult = false;
 
         if (is_string($sendId)) {
             $sendResult = $this->sendMail($transport, $sendId);
+        }
+
+        if (is_string($deleteId)) {
+            $deleteResult = $this->deleteMail($transport, $deleteId);
         }
 
         foreach ($transport->getMailQueue() as $mailQueueItem) {
@@ -142,6 +150,7 @@ final class MailqueueModuleController
 
         return [
             'delayThreshold' => $this->extensionConfiguration->getQueueDelayThreshold(),
+            'deleteResult' => $deleteResult,
             'failing' => $failing,
             'longestPendingInterval' => $longestPendingInterval,
             'pagination' => $pagination,
@@ -153,14 +162,7 @@ final class MailqueueModuleController
 
     private function sendMail(Mail\Transport\QueueableTransport $transport, string $queueItemId): Enums\MailState
     {
-        $mailQueueItem = null;
-
-        foreach ($transport->getMailQueue() as $item) {
-            if ($item->id === $queueItemId) {
-                $mailQueueItem = $item;
-                break;
-            }
-        }
+        $mailQueueItem = $this->getMailById($transport, $queueItemId);
 
         if ($mailQueueItem === null) {
             return Enums\MailState::AlreadySent;
@@ -173,6 +175,30 @@ final class MailqueueModuleController
         }
 
         return Enums\MailState::Sent;
+    }
+
+    private function deleteMail(Mail\Transport\QueueableTransport $transport, string $queueItemId): bool
+    {
+        $mailQueueItem = $this->getMailById($transport, $queueItemId);
+
+        if ($mailQueueItem === null) {
+            return false;
+        }
+
+        return $transport->delete($mailQueueItem);
+    }
+
+    private function getMailById(
+        Mail\Transport\QueueableTransport $transport,
+        string $queueItemId,
+    ): ?Mail\Queue\MailQueueItem {
+        foreach ($transport->getMailQueue() as $mailQueueItem) {
+            if ($mailQueueItem->id === $queueItemId) {
+                return $mailQueueItem;
+            }
+        }
+
+        return null;
     }
 
     private function addLinkToConfigurationModule(Backend\Template\ModuleTemplate $template): void

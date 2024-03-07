@@ -3,6 +3,12 @@
 
 {queue -> f:count() -> f:variable(name: 'count')}
 
+<f:if condition="{deleteResult}">
+    <f:be.infobox state="0"
+                  message="{f:translate(key: 'alert.deleteResult.deleted.message', extensionName: 'Mailqueue')}"
+    />
+</f:if>
+
 <f:if condition="{sendResult}">
     <f:switch expression="{sendResult.value}">
         <f:case value="alreadySent">

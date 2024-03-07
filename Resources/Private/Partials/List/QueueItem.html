@@ -5,6 +5,8 @@
 
 <tr class="{f:render(section: 'rowClass', arguments: {state: queueItem.state, date: queueItem.date}) -> f:spaceless()}">
     <td class="col-icon align-top">
+        <f:render partial="Modal/ConfirmDelete" arguments="{queueItem: queueItem, iterator: iterator}" />
+
         <f:switch expression="{queueItem.state.value}">
             <f:case value="failed">
                 <span class="badge badge-danger d-block">{f:translate(key: 'queueItem.state.failed', extensionName: 'Mailqueue')}</span>
@@ -68,12 +70,19 @@
         <div class="btn-group">
             <f:if condition="{queueItem.state.value} == 'failed' && {queueItem.failure}">
                 <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#queue-item-{iterator.cycle}-modal"
+                        data-bs-target="#queue-item-{iterator.cycle}-info-modal"
                         title="{f:translate(key: 'button.info', extensionName: 'Mailqueue')}"
                 >
                     <c:icon identifier="actions-info" />
                 </button>
             </f:if>
+
+            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#queue-item-{iterator.cycle}-delete-modal"
+                    title="{f:translate(key: 'button.delete', extensionName: 'Mailqueue')}"
+            >
+                <c:icon identifier="actions-delete" />
+            </button>
 
             <f:be.link route="system_mailqueue" parameters="{send: queueItem.id}" class="btn btn-default btn-sm"
                        title="{f:translate(key: 'button.send', extensionName: 'Mailqueue')}"

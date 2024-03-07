@@ -47,4 +47,6 @@ interface QueueableTransport extends Core\Mail\DelayedTransportInterface
      * @throws Mailer\Exception\TransportExceptionInterface
      */
     public function dequeue(Mail\Queue\MailQueueItem $item, Mailer\Transport\TransportInterface $transport): bool;
+
+    public function delete(Mail\Queue\MailQueueItem $item): bool;
 }
