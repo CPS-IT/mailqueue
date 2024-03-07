@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace CPSIT\Typo3Mailqueue\Controller;
 
 use CPSIT\Typo3Mailqueue\Enums;
+use CPSIT\Typo3Mailqueue\Exception;
 use CPSIT\Typo3Mailqueue\Mail;
 use CPSIT\Typo3Mailqueue\Traits;
 use Psr\Http\Message;
@@ -58,12 +59,13 @@ final class MailqueueModuleController
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
         $sendId = $request->getQueryParams()['send'] ?? null;
-        $templateVariables = [];
 
         if ($transport instanceof Mail\Transport\QueueableTransport) {
             $templateVariables = $this->resolveTemplateVariables($transport, $sendId);
         } else {
-            $templateVariables['unsupportedTransport'] = $transport::class;
+            $templateVariables = [
+                'unsupportedTransport' => $this->getTransportFromMailConfiguration(),
+            ];
         }
 
         // @todo Remove once support for TYPO3 v11 is dropped
@@ -163,6 +165,32 @@ final class MailqueueModuleController
         $button->setShowLabelText(true);
 
         $buttonBar->addButton($button);
+    }
+
+    /**
+     * @throws Exception\MailTransportIsNotConfigured
+     */
+    private function getTransportFromMailConfiguration(): string
+    {
+        $mailConfiguration = $GLOBALS['TYPO3_CONF_VARS']['MAIL'] ?? null;
+
+        if (!is_array($mailConfiguration)) {
+            throw new Exception\MailTransportIsNotConfigured();
+        }
+
+        $spoolType = $mailConfiguration['transport_spool_type'] ?? null;
+
+        if (is_string($spoolType) && trim($spoolType) !== '') {
+            return $spoolType;
+        }
+
+        $transport = $mailConfiguration['transport'] ?? null;
+
+        if (is_string($transport) && trim($transport) !== '') {
+            return $transport;
+        }
+
+        throw new Exception\MailTransportIsNotConfigured();
     }
 
     /**
