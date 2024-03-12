@@ -74,7 +74,11 @@
                 </thead>
                 <tbody>
                     <f:for each="{paginator.paginatedItems}" as="queueItem" iteration="iterator">
-                        <f:render partial="List/QueueItem" arguments="{queueItem: queueItem, iterator: iterator}" />
+                        <f:render partial="List/QueueItem" arguments="{
+                            queueItem: queueItem,
+                            iterator: iterator,
+                            delayThreshold: delayThreshold
+                        }" />
                     </f:for>
                 </tbody>
                 <tfoot>
