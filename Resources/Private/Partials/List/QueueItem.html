@@ -3,7 +3,7 @@
       xmlns:m="http://typo3.org/ns/CPSIT/Typo3Mailqueue/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<tr class="{f:render(section: 'rowClass', arguments: {state: queueItem.state, date: queueItem.date}) -> f:spaceless()}">
+<tr class="{f:render(section: 'rowClass', arguments: {state: queueItem.state, date: queueItem.date, delayThreshold: delayThreshold}) -> f:spaceless()}">
     <td class="col-icon align-top">
         <f:render partial="Modal/ConfirmDelete" arguments="{queueItem: queueItem, iterator: iterator}" />
 
