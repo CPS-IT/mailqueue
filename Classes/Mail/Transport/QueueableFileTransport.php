@@ -28,6 +28,8 @@ use CPSIT\Typo3Mailqueue\Exception;
 use CPSIT\Typo3Mailqueue\Iterator;
 use CPSIT\Typo3Mailqueue\Mail;
 use DateTimeImmutable;
+use DateTimeInterface;
+use DateTimeZone;
 use DirectoryIterator;
 use Generator;
 use Psr\Log;
@@ -256,7 +258,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
 
         // Add last modification date
         if ($lastChanged !== false) {
-            $date = new DateTimeImmutable('@' . $lastChanged);
+            $date = new DateTimeImmutable('@' . $lastChanged, $this->getCurrentTimezone());
         } else {
             $date = null;
         }
@@ -293,5 +295,16 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         }
 
         return $file;
+    }
+
+    private function getCurrentTimezone(): ?DateTimeZone
+    {
+        $date = $this->context->getPropertyFromAspect('date', 'full');
+
+        if (!($date instanceof DateTimeInterface)) {
+            return null;
+        }
+
+        return $date->getTimezone();
     }
 }
