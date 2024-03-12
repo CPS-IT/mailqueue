@@ -52,6 +52,7 @@ final class MailqueueModuleController
         private readonly Backend\Template\ModuleTemplateFactory $moduleTemplateFactory,
         private readonly Core\Mail\Mailer $mailer,
         private readonly Backend\Routing\UriBuilder $uriBuilder,
+        private readonly Core\Context\Context $context,
     ) {
         $this->typo3Version = new Core\Information\Typo3Version();
     }
@@ -118,7 +119,8 @@ final class MailqueueModuleController
     ): array {
         $failing = false;
         $longestPendingInterval = 0;
-        $now = time();
+        /** @var int $now */
+        $now = $this->context->getPropertyFromAspect('date', 'timestamp');
         $sendResult = null;
         $deleteResult = false;
 

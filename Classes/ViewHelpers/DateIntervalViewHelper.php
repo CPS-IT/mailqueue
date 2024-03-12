@@ -25,6 +25,7 @@ namespace CPSIT\Typo3Mailqueue\ViewHelpers;
 
 use Closure;
 use DateTimeInterface;
+use TYPO3\CMS\Core;
 use TYPO3Fluid\Fluid;
 
 /**
@@ -48,11 +49,13 @@ final class DateIntervalViewHelper extends Fluid\Core\ViewHelper\AbstractViewHel
         Fluid\Core\Rendering\RenderingContextInterface $renderingContext,
     ): ?int {
         $date = $renderChildrenClosure();
+        /** @var int $now */
+        $now = Core\Utility\GeneralUtility::makeInstance(Core\Context\Context::class)->getPropertyFromAspect('date', 'timestamp');
 
         if (!($date instanceof DateTimeInterface)) {
             return null;
         }
 
-        return time() - $date->getTimestamp();
+        return $now - $date->getTimestamp();
     }
 }
