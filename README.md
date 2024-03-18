@@ -4,7 +4,7 @@
 
 # TYPO3 extension `mailqueue`
 
-[![Coverage](https://codecov.io/gh/CPS-IT/mailqueue/graph/badge.svg?token=kMi9CaL3gV)](https://codecov.io/gh/CPS-IT/mailqueue)
+[![Coverage](https://img.shields.io/coverallsCoverage/github/CPS-IT/mailqueue?logo=coveralls)](https://coveralls.io/github/CPS-IT/mailqueue)
 [![Maintainability](https://api.codeclimate.com/v1/badges/75952c5451dea0632fc0/maintainability)](https://codeclimate.com/github/CPS-IT/mailqueue/maintainability)
 [![CGL](https://github.com/CPS-IT/mailqueue/actions/workflows/cgl.yaml/badge.svg)](https://github.com/CPS-IT/mailqueue/actions/workflows/cgl.yaml)
 [![Release](https://github.com/CPS-IT/mailqueue/actions/workflows/release.yaml/badge.svg)](https://github.com/CPS-IT/mailqueue/actions/workflows/release.yaml)
