@@ -73,7 +73,7 @@ composer test:coverage:merge
 
 ### Test reports
 
-Code coverage reports are written to `.Build/log/coverage`. You can open the
+Code coverage reports are written to `.Build/coverage`. You can open the
 last merged HTML report like follows:
 
 ```bash
