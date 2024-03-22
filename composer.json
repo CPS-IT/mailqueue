@@ -18,9 +18,9 @@
 		"symfony/console": "^5.4 || ^6.4 || ^7.0",
 		"symfony/mailer": "^5.4 || ^6.4 || ^7.0",
 		"symfony/mime": "^5.4 || ^6.4 || ^7.0",
-		"typo3/cms-backend": "^11.5 || ^12.4 || ^13.0",
-		"typo3/cms-core": "^11.5 || ^12.4 || ^13.0",
-		"typo3/cms-fluid": "^11.5 || ^12.4 || ^13.0",
+		"typo3/cms-backend": "~11.5.0 || ~12.4.0 || ~13.0.0",
+		"typo3/cms-core": "~11.5.0 || ~12.4.0 || ~13.0.0",
+		"typo3/cms-fluid": "~11.5.0 || ~12.4.0 || ~13.0.0",
 		"typo3fluid/fluid": "^2.7"
 	},
 	"require-dev": {
@@ -33,7 +33,7 @@
 		"phpunit/phpcov": "^9.0 || ^10.0",
 		"saschaegerer/phpstan-typo3": "^1.10",
 		"ssch/typo3-rector": "^2.0",
-		"typo3/cms-lowlevel": "^11.5 || ^12.4 || ^13.0",
+		"typo3/cms-lowlevel": "~11.5.0 || ~12.4.0 || ~13.0.0",
 		"typo3/coding-standards": "^0.7.1",
 		"typo3/testing-framework": "^7.0.2 || ^8.0.1"
 	},
