@@ -34,6 +34,9 @@ use TYPO3\CMS\Backend;
 use TYPO3\CMS\Core;
 use TYPO3\CMS\Fluid;
 
+use function is_array;
+use function is_numeric;
+
 /**
  * MailqueueModuleController
  *
@@ -61,7 +64,7 @@ final class MailqueueModuleController
     {
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
-        $page = (int)($request->getQueryParams()['page'] ?? $request->getParsedBody()['page'] ?? 1);
+        $page = $this->resolvePageIdFromRequest($request);
         $sendId = $request->getQueryParams()['send'] ?? null;
         $deleteId = $request->getQueryParams()['delete'] ?? null;
 
@@ -97,6 +100,21 @@ final class MailqueueModuleController
             ->assignMultiple($templateVariables)
             ->renderResponse('List')
         ;
+    }
+
+    private function resolvePageIdFromRequest(Message\ServerRequestInterface $request): int
+    {
+        $pageId = $request->getQueryParams()['page'] ?? null;
+
+        if (is_numeric($pageId)) {
+            return (int)$pageId;
+        }
+
+        if (!is_array($request->getParsedBody())) {
+            return 1;
+        }
+
+        return (int)($request->getParsedBody()['page'] ?? 1);
     }
 
     /**
