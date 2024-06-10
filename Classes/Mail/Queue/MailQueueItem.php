@@ -25,7 +25,6 @@ namespace CPSIT\Typo3Mailqueue\Mail\Queue;
 
 use CPSIT\Typo3Mailqueue\Enums;
 use CPSIT\Typo3Mailqueue\Mail;
-use DateTimeInterface;
 use Symfony\Component\Mailer;
 
 /**
@@ -40,7 +39,7 @@ final class MailQueueItem
         public readonly string $id,
         public readonly Mailer\SentMessage $message,
         public readonly Enums\MailState $state,
-        public readonly ?DateTimeInterface $date = null,
+        public readonly ?\DateTimeInterface $date = null,
         public readonly ?Mail\TransportFailure $failure = null,
     ) {}
 }

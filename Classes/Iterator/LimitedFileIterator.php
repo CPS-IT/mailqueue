@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace CPSIT\Typo3Mailqueue\Iterator;
 
 use FilterIterator;
-use Iterator;
 use SplFileInfo;
 use Traversable;
 
@@ -36,13 +35,13 @@ use Traversable;
  *
  * @extends FilterIterator<int, SplFileInfo, Traversable<SplFileInfo>>
  */
-final class LimitedFileIterator extends FilterIterator
+final class LimitedFileIterator extends \FilterIterator
 {
     /**
      * @param list<string> $acceptedSuffixes
      */
     public function __construct(
-        Iterator $iterator,
+        \Iterator $iterator,
         private readonly array $acceptedSuffixes,
     ) {
         parent::__construct($iterator);

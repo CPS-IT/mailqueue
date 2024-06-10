@@ -23,10 +23,7 @@ declare(strict_types=1);
 
 namespace CPSIT\Typo3Mailqueue\Mail\Queue;
 
-use ArrayIterator;
-use Countable;
 use IteratorAggregate;
-use Traversable;
 
 /**
  * MailQueue
@@ -36,10 +33,10 @@ use Traversable;
  *
  * @implements IteratorAggregate<MailQueueItem>
  */
-final class MailQueue implements Countable, IteratorAggregate
+final class MailQueue implements \Countable, \IteratorAggregate
 {
     /**
-     * @param callable(): Traversable<MailQueueItem> $readQueueFn
+     * @param callable(): \Traversable<MailQueueItem> $readQueueFn
      */
     public function __construct(
         private $readQueueFn,
@@ -65,16 +62,16 @@ final class MailQueue implements Countable, IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator<int, MailQueueItem>
+     * @return \ArrayIterator<int, MailQueueItem>
      */
-    public function getIterator(): ArrayIterator
+    public function getIterator(): \ArrayIterator
     {
         $iterator = ($this->readQueueFn)();
         $queue = iterator_to_array($iterator);
 
         usort($queue, self::orderQueueItems(...));
 
-        return new ArrayIterator($queue);
+        return new \ArrayIterator($queue);
     }
 
     private static function orderQueueItems(MailQueueItem $a, MailQueueItem $b): int

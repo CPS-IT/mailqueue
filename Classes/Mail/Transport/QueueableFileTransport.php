@@ -27,13 +27,7 @@ use CPSIT\Typo3Mailqueue\Enums;
 use CPSIT\Typo3Mailqueue\Exception;
 use CPSIT\Typo3Mailqueue\Iterator;
 use CPSIT\Typo3Mailqueue\Mail;
-use DateTimeImmutable;
-use DateTimeInterface;
-use DateTimeZone;
-use DirectoryIterator;
-use Generator;
 use Psr\Log;
-use SplFileInfo;
 use Symfony\Component\Mailer;
 use Symfony\Component\Mime;
 use Symfony\Contracts\EventDispatcher;
@@ -64,7 +58,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
 
     public function recover(int $timeout = 900): void
     {
-        $iterator = new DirectoryIterator($this->path);
+        $iterator = new \DirectoryIterator($this->path);
 
         // Remove failure metadata
         foreach ($iterator as $file) {
@@ -85,7 +79,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
      */
     public function flushQueue(Mailer\Transport\TransportInterface $transport): int
     {
-        $directoryIterator = new DirectoryIterator($this->path);
+        $directoryIterator = new \DirectoryIterator($this->path);
         $execTime = $this->context->getPropertyFromAspect('date', 'timestamp');
         $time = time();
         $count = 0;
@@ -202,12 +196,12 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
     }
 
     /**
-     * @return Generator<Mail\Queue\MailQueueItem>
+     * @return \Generator<Mail\Queue\MailQueueItem>
      */
-    private function initializeQueueFromFilePath(): Generator
+    private function initializeQueueFromFilePath(): \Generator
     {
         $iterator = new Iterator\LimitedFileIterator(
-            new DirectoryIterator($this->path),
+            new \DirectoryIterator($this->path),
             [
                 self::FILE_SUFFIX_QUEUED,
                 self::FILE_SUFFIX_SENDING,
@@ -222,7 +216,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
     /**
      * @throws Exception\SerializedMessageIsInvalid
      */
-    private function restoreItem(SplFileInfo $file): Mail\Queue\MailQueueItem
+    private function restoreItem(\SplFileInfo $file): Mail\Queue\MailQueueItem
     {
         $path = (string)$file->getRealPath();
         $lastChanged = $file->getMTime();
@@ -258,7 +252,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
 
         // Add last modification date
         if ($lastChanged !== false) {
-            $date = new DateTimeImmutable('@' . $lastChanged, $this->getCurrentTimezone());
+            $date = new \DateTimeImmutable('@' . $lastChanged, $this->getCurrentTimezone());
         } else {
             $date = null;
         }
@@ -297,11 +291,11 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         return $file;
     }
 
-    private function getCurrentTimezone(): ?DateTimeZone
+    private function getCurrentTimezone(): ?\DateTimeZone
     {
         $date = $this->context->getPropertyFromAspect('date', 'full');
 
-        if (!($date instanceof DateTimeInterface)) {
+        if (!($date instanceof \DateTimeInterface)) {
             return null;
         }
 

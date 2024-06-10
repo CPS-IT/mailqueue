@@ -34,9 +34,6 @@ use TYPO3\CMS\Backend;
 use TYPO3\CMS\Core;
 use TYPO3\CMS\Fluid;
 
-use function is_array;
-use function is_numeric;
-
 /**
  * MailqueueModuleController
  *
@@ -106,11 +103,11 @@ final class MailqueueModuleController
     {
         $pageId = $request->getQueryParams()['page'] ?? null;
 
-        if (is_numeric($pageId)) {
+        if (\is_numeric($pageId)) {
             return (int)$pageId;
         }
 
-        if (!is_array($request->getParsedBody())) {
+        if (!\is_array($request->getParsedBody())) {
             return 1;
         }
 
@@ -246,7 +243,7 @@ final class MailqueueModuleController
     {
         $mailConfiguration = $GLOBALS['TYPO3_CONF_VARS']['MAIL'] ?? null;
 
-        if (!is_array($mailConfiguration)) {
+        if (!\is_array($mailConfiguration)) {
             throw new Exception\MailTransportIsNotConfigured();
         }
 

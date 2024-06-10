@@ -23,8 +23,6 @@ declare(strict_types=1);
 
 namespace CPSIT\Typo3Mailqueue\ViewHelpers;
 
-use Closure;
-use DateTimeInterface;
 use TYPO3\CMS\Core;
 use TYPO3Fluid\Fluid;
 
@@ -40,19 +38,19 @@ final class DateIntervalViewHelper extends Fluid\Core\ViewHelper\AbstractViewHel
 
     public function initializeArguments(): void
     {
-        $this->registerArgument('date', DateTimeInterface::class, 'The date for which to create an interval');
+        $this->registerArgument('date', \DateTimeInterface::class, 'The date for which to create an interval');
     }
 
     public static function renderStatic(
         array $arguments,
-        Closure $renderChildrenClosure,
+        \Closure $renderChildrenClosure,
         Fluid\Core\Rendering\RenderingContextInterface $renderingContext,
     ): ?int {
         $date = $renderChildrenClosure();
         /** @var int $now */
         $now = Core\Utility\GeneralUtility::makeInstance(Core\Context\Context::class)->getPropertyFromAspect('date', 'timestamp');
 
-        if (!($date instanceof DateTimeInterface)) {
+        if (!($date instanceof \DateTimeInterface)) {
             return null;
         }
 
