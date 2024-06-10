@@ -25,8 +25,6 @@ namespace CPSIT\Typo3Mailqueue\Mail\Transport;
 
 use CPSIT\Typo3Mailqueue\Enums;
 use CPSIT\Typo3Mailqueue\Mail;
-use DateTimeImmutable;
-use Generator;
 use Symfony\Component\Mailer;
 use Symfony\Component\Mime;
 use TYPO3\CMS\Core;
@@ -53,7 +51,7 @@ final class QueueableMemoryTransport extends Core\Mail\MemorySpool implements Qu
             (string)$id,
             $sentMessage,
             Enums\MailState::Queued,
-            new DateTimeImmutable(),
+            new \DateTimeImmutable(),
         );
     }
 
@@ -85,9 +83,9 @@ final class QueueableMemoryTransport extends Core\Mail\MemorySpool implements Qu
     }
 
     /**
-     * @return Generator<Mail\Queue\MailQueueItem>
+     * @return \Generator<Mail\Queue\MailQueueItem>
      */
-    private function initializeQueue(): Generator
+    private function initializeQueue(): \Generator
     {
         foreach ($this->queuedMessages as $key => $queuedMessage) {
             yield new Mail\Queue\MailQueueItem(

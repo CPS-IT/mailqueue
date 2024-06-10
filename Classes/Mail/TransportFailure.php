@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace CPSIT\Typo3Mailqueue\Mail;
 
 use CPSIT\Typo3Mailqueue\Exception;
-use DateTimeImmutable;
 use Symfony\Component\Mailer;
 
 /**
@@ -38,7 +37,7 @@ final class TransportFailure
     public function __construct(
         public readonly string $exception,
         public readonly string $message,
-        public readonly DateTimeImmutable $date,
+        public readonly \DateTimeImmutable $date,
     ) {}
 
     public static function fromException(Mailer\Exception\TransportExceptionInterface $exception): self
@@ -46,7 +45,7 @@ final class TransportFailure
         return new self(
             $exception::class,
             $exception->getMessage(),
-            new DateTimeImmutable(),
+            new \DateTimeImmutable(),
         );
     }
 
@@ -62,7 +61,7 @@ final class TransportFailure
 
         $failure = unserialize((string)file_get_contents($file), [
             'allowedClasses' => [
-                DateTimeImmutable::class,
+                \DateTimeImmutable::class,
             ],
         ]);
 

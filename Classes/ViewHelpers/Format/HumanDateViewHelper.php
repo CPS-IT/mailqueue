@@ -23,11 +23,7 @@ declare(strict_types=1);
 
 namespace CPSIT\Typo3Mailqueue\ViewHelpers\Format;
 
-use Closure;
 use CPSIT\Typo3Mailqueue\Traits;
-use DateInterval;
-use DateTimeImmutable;
-use DateTimeInterface;
 use TYPO3Fluid\Fluid;
 
 /**
@@ -43,28 +39,28 @@ final class HumanDateViewHelper extends Fluid\Core\ViewHelper\AbstractViewHelper
 
     public function initializeArguments(): void
     {
-        $this->registerArgument('date', DateTimeInterface::class, 'The date to format');
+        $this->registerArgument('date', \DateTimeInterface::class, 'The date to format');
     }
 
     public static function renderStatic(
         array $arguments,
-        Closure $renderChildrenClosure,
+        \Closure $renderChildrenClosure,
         Fluid\Core\Rendering\RenderingContextInterface $renderingContext,
     ): ?string {
         $date = $renderChildrenClosure();
 
-        if (!($date instanceof DateTimeInterface)) {
+        if (!($date instanceof \DateTimeInterface)) {
             return null;
         }
 
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $delta = $now->getTimestamp() - $date->getTimestamp();
         $interval = $now->diff($date);
 
         return self::renderHumanDateInterval($date, $delta, $interval);
     }
 
-    private static function renderHumanDateInterval(DateTimeInterface $date, int $delta, DateInterval $interval): string
+    private static function renderHumanDateInterval(\DateTimeInterface $date, int $delta, \DateInterval $interval): string
     {
         if ($delta <= 30) {
             return self::translate('humanDate.now');
@@ -97,7 +93,7 @@ final class HumanDateViewHelper extends Fluid\Core\ViewHelper\AbstractViewHelper
         );
     }
 
-    private static function formatDate(DateTimeInterface $date): string
+    private static function formatDate(\DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
     }
