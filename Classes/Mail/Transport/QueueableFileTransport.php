@@ -80,6 +80,7 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
     public function flushQueue(Mailer\Transport\TransportInterface $transport): int
     {
         $directoryIterator = new \DirectoryIterator($this->path);
+        /** @var positive-int $execTime */
         $execTime = $this->context->getPropertyFromAspect('date', 'timestamp');
         $time = time();
         $count = 0;
