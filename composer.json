@@ -21,7 +21,7 @@
 		"typo3/cms-backend": "~11.5.0 || ~12.4.0 || ~13.0.0",
 		"typo3/cms-core": "~11.5.0 || ~12.4.0 || ~13.0.0",
 		"typo3/cms-fluid": "~11.5.0 || ~12.4.0 || ~13.0.0",
-		"typo3fluid/fluid": "^2.7"
+		"typo3fluid/fluid": "^2.7 || ^4.0"
 	},
 	"require-dev": {
 		"armin/editorconfig-cli": "^1.8 || ^2.0",
