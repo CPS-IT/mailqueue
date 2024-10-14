@@ -210,6 +210,6 @@ This project is licensed under [GNU General Public License 2.0 (or later)](LICEN
 
 [1]: https://extensions.typo3.org/extension/mailqueue
 [2]: https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/Mail/Index.html#spooling
-[3]: https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/Configuration/Typo3ConfVars/MAIL.html#transport-spool-type
+[3]: https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/Configuration/Typo3ConfVars/MAIL.html#confval-globals-typo3-conf-vars-mail-transport-spool-type
 [4]: https://typo3.github.io/TYPO3.Icons/icons/actions/actions-envelope-open.html
 [5]: https://github.com/TYPO3/TYPO3.Icons/blob/main/LICENSE
