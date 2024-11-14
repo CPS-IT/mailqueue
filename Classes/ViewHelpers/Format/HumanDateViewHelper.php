@@ -34,20 +34,16 @@ use TYPO3Fluid\Fluid;
  */
 final class HumanDateViewHelper extends Fluid\Core\ViewHelper\AbstractViewHelper
 {
-    use Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
     use Traits\TranslatableTrait;
 
     public function initializeArguments(): void
     {
-        $this->registerArgument('date', \DateTimeInterface::class, 'The date to format');
+        $this->registerArgument('date', \DateTimeInterface::class, 'The date to format', true);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        Fluid\Core\Rendering\RenderingContextInterface $renderingContext,
-    ): ?string {
-        $date = $renderChildrenClosure();
+    public function render(): ?string
+    {
+        $date = $this->renderChildren();
 
         if (!($date instanceof \DateTimeInterface)) {
             return null;
@@ -58,6 +54,11 @@ final class HumanDateViewHelper extends Fluid\Core\ViewHelper\AbstractViewHelper
         $interval = $now->diff($date);
 
         return self::renderHumanDateInterval($date, $delta, $interval);
+    }
+
+    public function getContentArgumentName(): string
+    {
+        return 'date';
     }
 
     private static function renderHumanDateInterval(\DateTimeInterface $date, int $delta, \DateInterval $interval): string
