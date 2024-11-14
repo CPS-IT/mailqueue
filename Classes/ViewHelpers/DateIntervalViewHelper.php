@@ -34,19 +34,14 @@ use TYPO3Fluid\Fluid;
  */
 final class DateIntervalViewHelper extends Fluid\Core\ViewHelper\AbstractViewHelper
 {
-    use Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
-
     public function initializeArguments(): void
     {
-        $this->registerArgument('date', \DateTimeInterface::class, 'The date for which to create an interval');
+        $this->registerArgument('date', \DateTimeInterface::class, 'The date for which to create an interval', true);
     }
 
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        Fluid\Core\Rendering\RenderingContextInterface $renderingContext,
-    ): ?int {
-        $date = $renderChildrenClosure();
+    public function render(): ?int
+    {
+        $date = $this->renderChildren();
         /** @var int $now */
         $now = Core\Utility\GeneralUtility::makeInstance(Core\Context\Context::class)->getPropertyFromAspect('date', 'timestamp');
 
@@ -55,5 +50,10 @@ final class DateIntervalViewHelper extends Fluid\Core\ViewHelper\AbstractViewHel
         }
 
         return $now - $date->getTimestamp();
+    }
+
+    public function getContentArgumentName(): string
+    {
+        return 'date';
     }
 }

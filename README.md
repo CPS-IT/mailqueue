@@ -35,7 +35,7 @@ console commands to list and flush the mail queue.
 * Improved queueable file transport with failure metadata
 * Backend module to list mails in queue
 * Console command to list queue and flush mails
-* Compatible with TYPO3 11.5 LTS, 12.4 LTS and 13.0
+* Compatible with TYPO3 11.5 LTS, 12.4 LTS and 13.4 LTS
 
 ## 🔥 Installation
 
