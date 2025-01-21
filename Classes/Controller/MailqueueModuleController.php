@@ -32,6 +32,7 @@ use Psr\Http\Message;
 use Symfony\Component\Mailer;
 use TYPO3\CMS\Backend;
 use TYPO3\CMS\Core;
+use TYPO3\CMS\Core\Http\AllowedMethodsTrait;
 use TYPO3\CMS\Fluid;
 
 /**
@@ -43,6 +44,7 @@ use TYPO3\CMS\Fluid;
 final class MailqueueModuleController
 {
     use Traits\TranslatableTrait;
+    use AllowedMethodsTrait;
 
     private readonly Core\Information\Typo3Version $typo3Version;
 
@@ -67,6 +69,7 @@ final class MailqueueModuleController
 
         // Force redirect when page selector was used
         if ($request->getMethod() === 'POST' && !isset($request->getQueryParams()['page'])) {
+            $this->assertAllowedHttpMethod($request, 'POST');
             return new Core\Http\RedirectResponse(
                 $this->uriBuilder->buildUriFromRoute('system_mailqueue', ['page' => $page]),
             );
@@ -92,7 +95,7 @@ final class MailqueueModuleController
         if ($this->typo3Version->getMajorVersion() < 12) {
             return $this->renderLegacyTemplate($template, $templateVariables);
         }
-
+        $this->assertAllowedHttpMethod($request, 'GET');
         return $template
             ->assignMultiple($templateVariables)
             ->renderResponse('List')
