@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of the TYPO3 CMS extension "mailqueue".
  *
- * Copyright (C) 2024 Elias Häußler <e.haeussler@familie-redlich.de>
+ * Copyright (C) 2025 Elias Häußler <e.haeussler@familie-redlich.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-$config = \TYPO3\CodingStandards\CsFixerConfig::create();
-$config->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect());
-$config->getFinder()->in(__DIR__);
-
-return $config;
+return \Symfony\Component\Finder\Finder::create()
+    ->files()
+    ->in(dirname(__DIR__, 2))
+    ->ignoreVCSIgnored(true)
+;

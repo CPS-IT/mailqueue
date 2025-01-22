@@ -62,7 +62,9 @@ final class MailqueueModuleController
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
         $page = $this->resolvePageIdFromRequest($request);
+        /** @var string|null $sendId */
         $sendId = $request->getQueryParams()['send'] ?? null;
+        /** @var string|null $deleteId */
         $deleteId = $request->getQueryParams()['delete'] ?? null;
 
         // Force redirect when page selector was used
@@ -111,7 +113,13 @@ final class MailqueueModuleController
             return 1;
         }
 
-        return (int)($request->getParsedBody()['page'] ?? 1);
+        $pageId = $request->getParsedBody()['page'] ?? 1;
+
+        if (\is_numeric($pageId)) {
+            return (int)$pageId;
+        }
+
+        return 1;
     }
 
     /**
