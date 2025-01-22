@@ -1,0 +1,52 @@
+{
+	"require-dev": {
+		"armin/editorconfig-cli": "^1.8 || ^2.0",
+		"ergebnis/composer-normalize": "^2.42",
+		"friendsofphp/php-cs-fixer": "^3.57",
+		"phpstan/extension-installer": "^1.3",
+		"phpstan/phpstan": "^2.0",
+		"phpstan/phpstan-phpunit": "^2.0",
+		"phpstan/phpstan-symfony": "^2.0",
+		"saschaegerer/phpstan-typo3": "^2.0@dev",
+		"ssch/typo3-rector": "^3.0",
+		"typo3/coding-standards": "^0.7.0 || ^0.8.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"ergebnis/composer-normalize": true,
+			"phpstan/extension-installer": true,
+			"typo3/class-alias-loader": false,
+			"typo3/cms-composer-installers": false
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"fix": [
+			"@fix:composer",
+			"@fix:editorconfig",
+			"@fix:php"
+		],
+		"fix:composer": [
+			"@composer normalize",
+			"@composer normalize ../../composer.json"
+		],
+		"fix:editorconfig": "@lint:editorconfig --fix",
+		"fix:php": "php-cs-fixer fix",
+		"lint": [
+			"@lint:composer",
+			"@lint:editorconfig",
+			"@lint:php"
+		],
+		"lint:composer": "@fix:composer --dry-run",
+		"lint:editorconfig": "ec --finder-config .editorconfig-lint.php",
+		"lint:php": "@fix:php --dry-run",
+		"migration": [
+			"@migration:rector"
+		],
+		"migration:rector": "rector process -c rector.php",
+		"sca": [
+			"@sca:php"
+		],
+		"sca:php": "phpstan analyse -c phpstan.neon"
+	}
+}

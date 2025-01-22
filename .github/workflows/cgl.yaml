@@ -44,16 +44,16 @@ jobs:
 
       # Linting
       - name: Lint composer.json
-        run: composer lint:composer
+        run: composer cgl lint:composer
       - name: Lint Editorconfig
-        run: composer lint:editorconfig
+        run: composer cgl lint:editorconfig
       - name: Lint PHP
-        run: composer lint:php
+        run: composer cgl lint:php
 
       # SCA
       - name: SCA PHP
-        run: composer sca:php -- --error-format github
+        run: composer cgl sca:php -- --error-format github
 
       # Migration
       - name: Run Rector migration
-        run: composer migration:rector -- --dry-run
+        run: composer cgl migration:rector -- --dry-run

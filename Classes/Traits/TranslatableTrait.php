@@ -40,8 +40,15 @@ trait TranslatableTrait
      */
     protected static function translate(string $key, array $arguments = []): string
     {
+        $backendUser = $GLOBALS['BE_USER'] ?? null;
+
+        // Should never happen, but makes PHPStan happy :)
+        if (!($backendUser instanceof Core\Authentication\BackendUserAuthentication)) {
+            return '';
+        }
+
         self::$languageService ??= Core\Utility\GeneralUtility::makeInstance(Core\Localization\LanguageServiceFactory::class)
-            ->createFromUserPreferences($GLOBALS['BE_USER']);
+            ->createFromUserPreferences($backendUser);
 
         return vsprintf(
             self::$languageService->sL(

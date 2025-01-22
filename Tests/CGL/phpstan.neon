@@ -1,0 +1,15 @@
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+	- phpstan-baseline.neon
+parameters:
+	level: max
+	paths:
+		- ../../Classes
+		- ../../Configuration
+		- ../../Tests
+	excludePaths:
+		- .
+	bootstrapFiles:
+		- ../../.Build/vendor/autoload.php
+	symfony:
+		consoleApplicationLoader: console-application.php
