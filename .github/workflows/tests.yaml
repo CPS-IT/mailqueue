@@ -44,6 +44,13 @@ jobs:
       - name: Start MySQL
         run: sudo /etc/init.d/mysql start
 
+      # Configure TYPO3 ELTS
+      - name: Add ELTS repository
+        run: |
+          composer config repositories.typo3-elts composer https://elts.typo3.com
+          composer config http-basic.elts.typo3.com ${{ secrets.TYPO3_ELTS_USERNAME }} ${{ secrets.TYPO3_ELTS_PASSWORD }}
+        if: ${{ matrix.typo3-version == '11.5' }}
+
       # Install dependencies
       - name: Install Composer dependencies
         uses: ramsey/composer-install@v3
