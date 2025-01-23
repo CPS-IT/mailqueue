@@ -61,6 +61,7 @@ final class MailqueueModuleController
     public function __invoke(Message\ServerRequestInterface $request): Message\ResponseInterface
     {
         $this->assertAllowedHttpMethod($request, 'GET', 'POST');
+
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
         $page = $this->resolvePageIdFromRequest($request);
@@ -94,6 +95,7 @@ final class MailqueueModuleController
         if ($this->typo3Version->getMajorVersion() < 12) {
             return $this->renderLegacyTemplate($template, $templateVariables);
         }
+
         return $template
             ->assignMultiple($templateVariables)
             ->renderResponse('List')
