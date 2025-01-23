@@ -43,6 +43,7 @@ use TYPO3\CMS\Fluid;
 final class MailqueueModuleController
 {
     use Traits\TranslatableTrait;
+    use Core\Http\AllowedMethodsTrait;
 
     private readonly Core\Information\Typo3Version $typo3Version;
 
@@ -59,6 +60,8 @@ final class MailqueueModuleController
 
     public function __invoke(Message\ServerRequestInterface $request): Message\ResponseInterface
     {
+        $this->assertAllowedHttpMethod($request, 'GET', 'POST');
+
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
         $page = $this->resolvePageIdFromRequest($request);
