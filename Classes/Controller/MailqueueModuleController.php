@@ -60,13 +60,7 @@ final class MailqueueModuleController
 
     public function __invoke(Message\ServerRequestInterface $request): Message\ResponseInterface
     {
-        $this->assertAllowedHttpMethod($request, 'GET', 'POST');
-
-        $template = $this->moduleTemplateFactory->create($request);
-        $transport = $this->mailer->getTransport();
         $page = $this->resolvePageIdFromRequest($request);
-        $sendId = $request->getQueryParams()['send'] ?? null;
-        $deleteId = $request->getQueryParams()['delete'] ?? null;
 
         // Force redirect when page selector was used
         if ($request->getMethod() === 'POST' && !isset($request->getQueryParams()['page'])) {
@@ -74,6 +68,13 @@ final class MailqueueModuleController
                 $this->uriBuilder->buildUriFromRoute('system_mailqueue', ['page' => $page]),
             );
         }
+
+        $this->assertAllowedHttpMethod($request, 'GET');
+
+        $template = $this->moduleTemplateFactory->create($request);
+        $transport = $this->mailer->getTransport();
+        $sendId = $request->getQueryParams()['send'] ?? null;
+        $deleteId = $request->getQueryParams()['delete'] ?? null;
 
         if ($transport instanceof Mail\Transport\QueueableTransport) {
             $templateVariables = $this->resolveTemplateVariables($transport, $page, $sendId, $deleteId);
