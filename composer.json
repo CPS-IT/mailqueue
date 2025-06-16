@@ -51,6 +51,7 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"cweagans/composer-patches": true,
 			"eliashaeussler/version-bumper": true,
 			"ergebnis/composer-normalize": true,
 			"phpstan/extension-installer": true,
