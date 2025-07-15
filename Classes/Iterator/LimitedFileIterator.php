@@ -23,17 +23,13 @@ declare(strict_types=1);
 
 namespace CPSIT\Typo3Mailqueue\Iterator;
 
-use FilterIterator;
-use SplFileInfo;
-use Traversable;
-
 /**
  * LimitedFileIterator
  *
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  *
- * @extends FilterIterator<int, SplFileInfo, Traversable<SplFileInfo>>
+ * @extends \FilterIterator<int, \SplFileInfo, \Traversable<\SplFileInfo>>
  */
 final class LimitedFileIterator extends \FilterIterator
 {
