@@ -23,15 +23,13 @@ declare(strict_types=1);
 
 namespace CPSIT\Typo3Mailqueue\Mail\Queue;
 
-use IteratorAggregate;
-
 /**
  * MailQueue
  *
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  *
- * @implements IteratorAggregate<MailQueueItem>
+ * @implements \IteratorAggregate<MailQueueItem>
  */
 final class MailQueue implements \Countable, \IteratorAggregate
 {
