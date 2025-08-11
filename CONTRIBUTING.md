@@ -24,30 +24,30 @@ composer install
 
 ```bash
 # All linters
-composer lint
+composer cgl lint
 
 # Specific linters
-composer lint:composer
-composer lint:editorconfig
-composer lint:php
+composer cgl lint:composer
+composer cgl lint:editorconfig
+composer cgl lint:php
 
 # Fix all CGL issues
-composer fix
+composer cgl fix
 
 # Fix specific CGL issues
-composer fix:composer
-composer fix:editorconfig
-composer fix:php
+composer cgl fix:composer
+composer cgl fix:editorconfig
+composer cgl fix:php
 ```
 
 ## Run static code analysis
 
 ```bash
 # All static code analyzers
-composer sca
+composer cgl sca
 
 # Specific static code analyzers
-composer sca:php
+composer cgl sca:php
 ```
 
 ## Run tests

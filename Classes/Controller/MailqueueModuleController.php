@@ -5,20 +5,14 @@ declare(strict_types=1);
 /*
  * This file is part of the TYPO3 CMS extension "mailqueue".
  *
- * Copyright (C) 2024 Elias Häußler <e.haeussler@familie-redlich.de>
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * The TYPO3 project - inspiring people to share!
  */
 
 namespace CPSIT\Typo3Mailqueue\Controller;
@@ -73,7 +67,9 @@ final class MailqueueModuleController
 
         $template = $this->moduleTemplateFactory->create($request);
         $transport = $this->mailer->getTransport();
+        /** @var string|null $sendId */
         $sendId = $request->getQueryParams()['send'] ?? null;
+        /** @var string|null $deleteId */
         $deleteId = $request->getQueryParams()['delete'] ?? null;
 
         if ($transport instanceof Mail\Transport\QueueableTransport) {
@@ -115,7 +111,13 @@ final class MailqueueModuleController
             return 1;
         }
 
-        return (int)($request->getParsedBody()['page'] ?? 1);
+        $pageId = $request->getParsedBody()['page'] ?? 1;
+
+        if (\is_numeric($pageId)) {
+            return (int)$pageId;
+        }
+
+        return 1;
     }
 
     /**
@@ -133,8 +135,8 @@ final class MailqueueModuleController
     private function resolveTemplateVariables(
         Mail\Transport\QueueableTransport $transport,
         int $currentPageNumber = 1,
-        string $sendId = null,
-        string $deleteId = null,
+        ?string $sendId = null,
+        ?string $deleteId = null,
     ): array {
         $failing = false;
         $longestPendingInterval = 0;

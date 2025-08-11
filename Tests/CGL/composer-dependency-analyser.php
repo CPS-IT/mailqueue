@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of the TYPO3 CMS extension "mailqueue".
  *
@@ -15,19 +13,20 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace CPSIT\Typo3Mailqueue\Enums;
+use Composer\Autoload\ClassLoader;
+use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
 
-/**
- * MailState
- *
- * @author Elias Häußler <e.haeussler@familie-redlich.de>
- * @license GPL-2.0-or-later
- */
-enum MailState: string
-{
-    case AlreadySent = 'alreadySent';
-    case Failed = 'failed';
-    case Queued = 'queued';
-    case Sending = 'sending';
-    case Sent = 'sent';
-}
+$rootPath = dirname(__DIR__, 2);
+
+/** @var ClassLoader $loader */
+$loader = require $rootPath . '/.Build/vendor/autoload.php';
+$loader->register();
+
+$configuration = new Configuration();
+$configuration
+    ->addPathsToExclude([
+        $rootPath . '/Tests/CGL',
+    ])
+;
+
+return $configuration;

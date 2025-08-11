@@ -19,9 +19,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          # @todo Use PHP 8.4 once PHP-CS-Fixer supports PHP 8.4
-          php-version: 8.3
-          tools: composer:v2, composer-require-checker, composer-unused
+          php-version: 8.4
+          tools: composer:v2, cs2pr
           coverage: none
 
       # Validation
@@ -31,29 +30,23 @@ jobs:
       # Install dependencies
       - name: Install Composer dependencies
         uses: ramsey/composer-install@v3
-        with:
-          composer-options: --no-plugins
 
-      # Check Composer dependencies
-      - name: Check dependencies
-        run: composer-require-checker check
-      - name: Re-install Composer dependencies
-        uses: ramsey/composer-install@v3
-      - name: Check for unused dependencies
-        run: composer-unused
+      # Analyze
+      - name: Analyze dependencies
+        run: composer cgl analyze:dependencies
 
       # Linting
       - name: Lint composer.json
-        run: composer lint:composer
+        run: composer cgl lint:composer
       - name: Lint Editorconfig
-        run: composer lint:editorconfig
+        run: composer cgl lint:editorconfig
       - name: Lint PHP
-        run: composer lint:php
+        run: composer cgl lint:php -- --format=checkstyle | cs2pr
 
       # SCA
       - name: SCA PHP
-        run: composer sca:php -- --error-format github
+        run: composer cgl sca:php -- --error-format github
 
       # Migration
       - name: Run Rector migration
-        run: composer migration:rector -- --dry-run
+        run: composer cgl migration:rector -- --dry-run
