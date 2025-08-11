@@ -15,21 +15,16 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace CPSIT\Typo3Mailqueue\Exception;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
+use TYPO3\CodingStandards\CsFixerConfig;
 
-/**
- * SerializedMessageIsInvalid
- *
- * @author Elias Häußler <e.haeussler@familie-redlich.de>
- * @license GPL-2.0-or-later
- */
-final class SerializedMessageIsInvalid extends Exception
-{
-    public function __construct(string $file)
-    {
-        parent::__construct(
-            sprintf('The file "%s" does not contain a valid serialized message.', $file),
-            1709133596,
-        );
-    }
-}
+$config = CsFixerConfig::create();
+$config->setHeader('This file is part of the TYPO3 CMS extension "mailqueue".');
+$config->setParallelConfig(ParallelConfigFactory::detect());
+$config->getFinder()
+    ->in(dirname(__DIR__, 2))
+    ->notPath('.Build')
+    ->ignoreDotFiles(false)
+;
+
+return $config;

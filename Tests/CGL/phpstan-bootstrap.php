@@ -15,21 +15,8 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace CPSIT\Typo3Mailqueue\Exception;
+use Composer\Autoload\ClassLoader;
 
-/**
- * SerializedMessageIsInvalid
- *
- * @author Elias Häußler <e.haeussler@familie-redlich.de>
- * @license GPL-2.0-or-later
- */
-final class SerializedMessageIsInvalid extends Exception
-{
-    public function __construct(string $file)
-    {
-        parent::__construct(
-            sprintf('The file "%s" does not contain a valid serialized message.', $file),
-            1709133596,
-        );
-    }
-}
+/** @var ClassLoader $classLoader */
+$classLoader = require \dirname(__DIR__, 2) . '/.Build/vendor/autoload.php';
+$classLoader->register(true);

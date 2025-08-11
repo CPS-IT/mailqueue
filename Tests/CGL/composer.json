@@ -1,0 +1,62 @@
+{
+	"require-dev": {
+		"armin/editorconfig-cli": "2.1.1",
+		"ergebnis/composer-normalize": "2.47.0",
+		"friendsofphp/php-cs-fixer": "3.85.1",
+		"phpstan/extension-installer": "1.4.3",
+		"phpstan/phpstan": "2.1.22",
+		"phpstan/phpstan-phpunit": "2.0.7",
+		"phpstan/phpstan-symfony": "2.0.7",
+		"saschaegerer/phpstan-typo3": "2.1.1",
+		"shipmonk/composer-dependency-analyser": "1.8.3",
+		"ssch/typo3-rector": "3.6.2",
+		"typo3/coding-standards": "0.8.0"
+	},
+	"provide": {
+		"typo3/cms-core": "*",
+		"typo3/cms-extbase": "*"
+	},
+	"config": {
+		"allow-plugins": {
+			"ergebnis/composer-normalize": true,
+			"phpstan/extension-installer": true,
+			"typo3/class-alias-loader": false,
+			"typo3/cms-composer-installers": false
+		},
+		"lock": false,
+		"sort-packages": true
+	},
+	"scripts": {
+		"analyze": [
+			"@analyze:dependencies"
+		],
+		"analyze:dependencies": "composer-dependency-analyser --composer-json ../../composer.json",
+		"fix": [
+			"@fix:composer",
+			"@fix:editorconfig",
+			"@fix:php"
+		],
+		"fix:composer": [
+			"@composer normalize",
+			"@composer normalize ../../composer.json"
+		],
+		"fix:editorconfig": "@lint:editorconfig --fix",
+		"fix:php": "php-cs-fixer fix",
+		"lint": [
+			"@lint:composer",
+			"@lint:editorconfig",
+			"@lint:php"
+		],
+		"lint:composer": "@fix:composer --dry-run",
+		"lint:editorconfig": "ec",
+		"lint:php": "@fix:php --dry-run",
+		"migration": [
+			"@migration:rector"
+		],
+		"migration:rector": "rector process -c rector.php",
+		"sca": [
+			"@sca:php"
+		],
+		"sca:php": "phpstan analyse -c phpstan.neon"
+	}
+}

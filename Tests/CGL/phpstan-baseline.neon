@@ -1,0 +1,37 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^While loop condition is always true\.$#'
+			identifier: while.alwaysTrue
+			count: 1
+			path: ../../Classes/Command/ListQueueCommand.php
+
+		-
+			message: '#^Cannot access offset ''MAIL'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../../Classes/Controller/MailqueueModuleController.php
+
+		-
+			message: '#^Cannot access offset ''Objects'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../../Classes/Extension.php
+
+		-
+			message: '#^Cannot access offset ''SYS'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: ../../Classes/Extension.php
+
+		-
+			message: '#^Cannot access offset ''TYPO3\\\\CMS\\\\Core\\\\Mail\\\\FileSpool'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../../Classes/Extension.php
+
+		-
+			message: '#^Cannot access offset ''TYPO3\\\\CMS\\\\Core\\\\Mail\\\\MemorySpool'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../../Classes/Extension.php
