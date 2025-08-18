@@ -7,22 +7,14 @@
 	"assignees": [
 		"eliashaeussler"
 	],
+	"constraints": {
+		"php": "8.1.*"
+	},
 	"packageRules": [
-		{
-			"constraints": {
-				"php": "8.1.*"
-			},
-			"matchFileNames": [
-				"composer.json"
-			]
-		},
 		{
 			"extends": [
 				":pinVersions"
 			],
-			"constraints": {
-				"php": "8.4.*"
-			},
 			"matchFileNames": [
 				"Tests/CGL/composer.json"
 			]
