@@ -8,6 +8,7 @@
 /CODE_OF_CONDUCT.md     export-ignore
 /composer.lock          export-ignore
 /CONTRIBUTING.md        export-ignore
+/ext_emconf.php         export-ignore
 /packaging_exclude.php  export-ignore
 /phpunit.functional.xml export-ignore
 /phpunit.unit.xml       export-ignore
