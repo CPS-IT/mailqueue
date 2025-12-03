@@ -26,7 +26,6 @@ use Psr\Http\Message;
 use Symfony\Component\Mailer;
 use TYPO3\CMS\Backend;
 use TYPO3\CMS\Core;
-use TYPO3\CMS\Fluid;
 
 /**
  * MailqueueModuleController
@@ -34,12 +33,11 @@ use TYPO3\CMS\Fluid;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
+#[Backend\Attribute\AsController]
 final class MailqueueModuleController
 {
     use Traits\TranslatableTrait;
     use Core\Http\AllowedMethodsTrait;
-
-    private readonly Core\Information\Typo3Version $typo3Version;
 
     public function __construct(
         private readonly Configuration\ExtensionConfiguration $extensionConfiguration,
@@ -48,9 +46,7 @@ final class MailqueueModuleController
         private readonly Core\Mail\Mailer $mailer,
         private readonly Backend\Routing\UriBuilder $uriBuilder,
         private readonly Core\Context\Context $context,
-    ) {
-        $this->typo3Version = new Core\Information\Typo3Version();
-    }
+    ) {}
 
     public function __invoke(Message\ServerRequestInterface $request): Message\ResponseInterface
     {
@@ -77,20 +73,11 @@ final class MailqueueModuleController
         } else {
             $templateVariables = [
                 'unsupportedTransport' => $this->getTransportFromMailConfiguration(),
-                'typo3Version' => $this->typo3Version->getMajorVersion(),
             ];
         }
 
-        // @todo Remove once support for TYPO3 v11 is dropped
-        $templateVariables['layout'] = $this->typo3Version->getMajorVersion() < 12 ? 'Default' : 'Module';
-
         if (Core\Utility\ExtensionManagementUtility::isLoaded('lowlevel')) {
             $this->addLinkToConfigurationModule($template);
-        }
-
-        // @todo Remove once support for TYPO3 v11 is dropped
-        if ($this->typo3Version->getMajorVersion() < 12) {
-            return $this->renderLegacyTemplate($template, $templateVariables);
         }
 
         return $template
@@ -266,26 +253,5 @@ final class MailqueueModuleController
         }
 
         throw new Exception\MailTransportIsNotConfigured();
-    }
-
-    /**
-     * @todo Remove once support for TYPO3 v11 is dropped
-     *
-     * @param array<string, mixed> $templateVariables
-     */
-    private function renderLegacyTemplate(
-        Backend\Template\ModuleTemplate $template,
-        array $templateVariables,
-    ): Core\Http\HtmlResponse {
-        $view = Core\Utility\GeneralUtility::makeInstance(Fluid\View\StandaloneView::class);
-        $view->setTemplateRootPaths(['EXT:mailqueue/Resources/Private/Templates/']);
-        $view->setPartialRootPaths(['EXT:mailqueue/Resources/Private/Partials/']);
-        $view->setLayoutRootPaths(['EXT:mailqueue/Resources/Private/Layouts/']);
-        $view->setTemplate('List');
-        $view->assignMultiple($templateVariables);
-
-        $template->setContent($view->render());
-
-        return new Core\Http\HtmlResponse($template->renderContent());
     }
 }

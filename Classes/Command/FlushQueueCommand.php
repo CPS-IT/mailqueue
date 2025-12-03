@@ -29,6 +29,10 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
+#[Console\Attribute\AsCommand(
+    name: 'mailqueue:flushqueue',
+    description: 'Flush mail queue by sending mails using the configured real transport',
+)]
 final class FlushQueueCommand extends Console\Command\Command
 {
     private ?Console\Output\OutputInterface $jsonOutput = null;

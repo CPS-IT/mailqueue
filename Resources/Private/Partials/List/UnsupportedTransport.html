@@ -34,15 +34,7 @@ $GLOBALS['TYPO3_CONF_VARS']['MAIL']['transport_spool_filepath'] = '/path/to/mail
         </f:spaceless></pre>
     </div>
     <div class="card-footer">
-        <f:if condition="{typo3Version} >= 12">
-            <f:then>
-                <code>config/system/additional.php</code>
-            </f:then>
-            <f:else>
-                <f:comment><!-- @todo Remove once support for TYPO3 v11 is dropped --></f:comment>
-                <code>typo3conf/AdditionalConfiguration.php</code>
-            </f:else>
-        </f:if>
+        <code>config/system/additional.php</code>
     </div>
 </div>
 

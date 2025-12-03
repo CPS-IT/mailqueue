@@ -9,7 +9,7 @@ body:
     attributes:
       label: TYPO3 version
       description: What TYPO3 version are you using?
-      placeholder: 'e.g. 11.5.25'
+      placeholder: 'e.g. 12.4.38'
     validations:
       required: true
   - type: input
