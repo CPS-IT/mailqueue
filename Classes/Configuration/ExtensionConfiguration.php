@@ -26,13 +26,13 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
-final class ExtensionConfiguration
+final readonly class ExtensionConfiguration
 {
     private const DEFAULT_DELAY_THRESHOLD = 1800;
     private const DEFAULT_ITEMS_PER_PAGE = 20;
 
     public function __construct(
-        private readonly Core\Configuration\ExtensionConfiguration $configuration,
+        private Core\Configuration\ExtensionConfiguration $configuration,
     ) {}
 
     /**

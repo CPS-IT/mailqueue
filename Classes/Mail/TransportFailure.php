@@ -26,12 +26,12 @@ use Symfony\Component\Mailer;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
-final class TransportFailure
+final readonly class TransportFailure
 {
     public function __construct(
-        public readonly string $exception,
-        public readonly string $message,
-        public readonly \DateTimeImmutable $date,
+        public string $exception,
+        public string $message,
+        public \DateTimeImmutable $date,
     ) {}
 
     public static function fromException(Mailer\Exception\TransportExceptionInterface $exception): self

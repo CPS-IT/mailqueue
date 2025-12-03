@@ -27,13 +27,13 @@ use Symfony\Component\Mailer;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
-final class MailQueueItem
+final readonly class MailQueueItem
 {
     public function __construct(
-        public readonly string $id,
-        public readonly Mailer\SentMessage $message,
-        public readonly Enums\MailState $state,
-        public readonly ?\DateTimeInterface $date = null,
-        public readonly ?Mail\TransportFailure $failure = null,
+        public string $id,
+        public Mailer\SentMessage $message,
+        public Enums\MailState $state,
+        public ?\DateTimeInterface $date = null,
+        public ?Mail\TransportFailure $failure = null,
     ) {}
 }

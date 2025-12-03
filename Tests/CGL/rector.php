@@ -32,10 +32,10 @@ return static function (RectorConfig $rectorConfig): void {
         $rootPath . '/Tests/CGL',
     ]);
 
-    $rectorConfig->phpVersion(PhpVersion::PHP_81);
+    $rectorConfig->phpVersion(PhpVersion::PHP_82);
 
     $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_81,
+        LevelSetList::UP_TO_PHP_82,
         Typo3LevelSetList::UP_TO_TYPO3_11,
     ]);
 };
