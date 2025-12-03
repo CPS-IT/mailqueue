@@ -1,7 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:layout name="{layout}" />
+<f:layout name="Module" />
 
 <f:section name="Content">
     <h1>{f:translate(key: 'header.list', extensionName: 'Mailqueue')}</h1>
@@ -9,8 +9,7 @@
     <f:if condition="{unsupportedTransport}">
         <f:then>
             <f:render partial="List/UnsupportedTransport" arguments="{
-                transport: unsupportedTransport,
-                typo3Version: typo3Version
+                transport: unsupportedTransport
             }" />
         </f:then>
         <f:else>
