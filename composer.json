@@ -20,14 +20,14 @@
 		"symfony/event-dispatcher-contracts": "^3.0",
 		"symfony/mailer": "^7.0",
 		"symfony/mime": "^7.0",
-		"typo3/cms-backend": "~12.4.25 || ~13.4.3",
-		"typo3/cms-core": "~12.4.25 || ~13.4.3",
+		"typo3/cms-backend": "~12.4.25 || ~13.4.3 || ~14.0.0",
+		"typo3/cms-core": "~12.4.25 || ~13.4.3 || ~14.0.0",
 		"typo3fluid/fluid": "^2.15 || ^4.0"
 	},
 	"require-dev": {
 		"eliashaeussler/version-bumper": "^3.0",
 		"phpunit/phpcov": "^10.0 || ^11.0",
-		"typo3/cms-lowlevel": "~12.4.25 || ~13.4.3",
+		"typo3/cms-lowlevel": "~12.4.25 || ~13.4.3 || ~14.0.0",
 		"typo3/testing-framework": "^8.0.9 || ^9.0.1"
 	},
 	"autoload": {
