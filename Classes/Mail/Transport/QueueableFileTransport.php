@@ -124,7 +124,8 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         try {
             $transport->send($item->message->getMessage(), $item->message->getEnvelope());
         } catch (Mailer\Exception\TransportExceptionInterface $exception) {
-            $this->flagFailedTransport($sendingPath, $exception);
+            // Store failure metadata
+            file_put_contents($failurePath, serialize(Mail\TransportFailure::fromException($exception)));
 
             throw $exception;
         }
@@ -163,14 +164,6 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         return new Mail\Queue\MailQueue(
             $this->initializeQueueFromFilePath(...),
         );
-    }
-
-    private function flagFailedTransport(string $file, Mailer\Exception\TransportExceptionInterface $exception): void
-    {
-        $failure = Mail\TransportFailure::fromException($exception);
-        $failurePath = $this->getFileVariant($file, self::FILE_SUFFIX_FAILURE_DATA);
-
-        file_put_contents($failurePath, serialize($failure));
     }
 
     /**
