@@ -154,12 +154,12 @@ final class MailqueueModuleController
         $paginator = new Core\Pagination\ArrayPaginator(
             $queue,
             $currentPageNumber,
-            $this->extensionConfiguration->getItemsPerPage(),
+            $this->extensionConfiguration->itemsPerPage,
         );
         $pagination = new Core\Pagination\SimplePagination($paginator);
 
         return [
-            'delayThreshold' => $this->extensionConfiguration->getQueueDelayThreshold(),
+            'delayThreshold' => $this->extensionConfiguration->queueDelayThreshold,
             'deleteResult' => $deleteResult,
             'failing' => $failing,
             'longestPendingInterval' => $longestPendingInterval,
