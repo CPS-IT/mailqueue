@@ -50,79 +50,68 @@ jobs:
       - name: Run tests
         run: composer test
 
-  # @todo Enable once we have tests
-#  coverage:
-#    name: Test coverage
-#    runs-on: ubuntu-latest
-#    env:
-#      typo3DatabaseName: typo3
-#      typo3DatabaseHost: '127.0.0.1'
-#      typo3DatabaseUsername: root
-#      typo3DatabasePassword: root
-#    steps:
-#      - uses: actions/checkout@v6
-#        with:
-#          fetch-depth: 0
-#
-#      # Prepare environment
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: 8.5
-#          tools: composer:v2
-#          coverage: pcov
-#
-#      # Start MySQL service
-#      - name: Start MySQL
-#        run: sudo /etc/init.d/mysql start
-#
-#      # Install dependencies
-#      - name: Install Composer dependencies
-#        uses: ramsey/composer-install@v3
-#
-#      # Run tests
-#      - name: Run tests
-#        run: composer test:coverage
-#
-#      # Upload artifact
-#      - name: Fix coverage path
-#        working-directory: .Build/coverage
-#        run: sed -i 's#/home/runner/work/mailqueue/mailqueue#${{ github.workspace }}#g' clover.xml
-#      - name: Upload coverage artifact
-#        uses: actions/upload-artifact@v5
-#        with:
-#          name: coverage
-#          path: .Build/coverage/clover.xml
-#          retention-days: 7
-#
-#  coverage-report:
-#    name: Report test coverage
-#    runs-on: ubuntu-latest
-#    needs: coverage
-#    steps:
-#      - uses: actions/checkout@v6
-#        with:
-#          fetch-depth: 0
-#
-#      # Download artifact
-#      - name: Download coverage artifact
-#        id: download
-#        uses: actions/download-artifact@v6
-#        with:
-#          name: coverage
-#
-#      # qlty
-#      - name: qlty report
-#        uses: qltysh/qlty-action/coverage@v2
-#        if: env.QLTY_COVERAGE_TOKEN
-#        env:
-#          QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-#        with:
-#          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-#          files: ${{ steps.download.outputs.download-path }}/clover.xml
-#
-#      # Coveralls
-#      - name: Coveralls report
-#        uses: coverallsapp/github-action@v2
-#        with:
-#          file: ${{ steps.download.outputs.download-path }}/clover.xml
+  coverage:
+    name: Test coverage
+    runs-on: ubuntu-latest
+    env:
+      typo3DatabaseName: typo3
+      typo3DatabaseHost: '127.0.0.1'
+      typo3DatabaseUsername: root
+      typo3DatabasePassword: root
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # Prepare environment
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.5
+          tools: composer:v2
+          coverage: pcov
+
+      # Start MySQL service
+      - name: Start MySQL
+        run: sudo /etc/init.d/mysql start
+
+      # Install dependencies
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+
+      # Run tests
+      - name: Run tests
+        run: composer test:coverage
+
+      # Upload artifact
+      - name: Fix coverage path
+        working-directory: .Build/coverage
+        run: sed -i 's#/home/runner/work/mailqueue/mailqueue#${{ github.workspace }}#g' clover.xml
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: coverage
+          path: .Build/coverage/clover.xml
+          retention-days: 7
+
+  coverage-report:
+    name: Report test coverage
+    runs-on: ubuntu-latest
+    needs: coverage
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # Download artifact
+      - name: Download coverage artifact
+        id: download
+        uses: actions/download-artifact@v6
+        with:
+          name: coverage
+
+      # Coveralls
+      - name: Coveralls report
+        uses: coverallsapp/github-action@v2
+        with:
+          file: ${{ steps.download.outputs.download-path }}/clover.xml

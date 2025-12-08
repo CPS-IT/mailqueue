@@ -6,9 +6,6 @@
          xsi:noNamespaceSchemaLocation=".Build/vendor/phpunit/phpunit/phpunit.xsd"
 >
     <coverage>
-        <include>
-            <directory suffix=".php">Classes</directory>
-        </include>
         <report>
             <php outputFile=".Build/coverage/php/unit.cov"/>
             <html outputDirectory=".Build/coverage/html/unit/"/>
@@ -23,4 +20,9 @@
     <logging>
         <junit outputFile=".Build/coverage/junit/unit.xml"/>
     </logging>
+    <source>
+        <include>
+            <directory>Classes</directory>
+        </include>
+    </source>
 </phpunit>

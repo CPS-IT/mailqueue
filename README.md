@@ -5,7 +5,6 @@
 # TYPO3 extension `mailqueue`
 
 [![Coverage](https://img.shields.io/coverallsCoverage/github/CPS-IT/mailqueue?logo=coveralls)](https://coveralls.io/github/CPS-IT/mailqueue)
-[![Maintainability](https://qlty.sh/gh/CPS-IT/projects/mailqueue/maintainability.svg)](https://qlty.sh/gh/CPS-IT/projects/mailqueue)
 [![CGL](https://github.com/CPS-IT/mailqueue/actions/workflows/cgl.yaml/badge.svg)](https://github.com/CPS-IT/mailqueue/actions/workflows/cgl.yaml)
 [![Release](https://github.com/CPS-IT/mailqueue/actions/workflows/release.yaml/badge.svg)](https://github.com/CPS-IT/mailqueue/actions/workflows/release.yaml)
 [![License](http://poser.pugx.org/cpsit/typo3-mailqueue/license)](LICENSE.md)\

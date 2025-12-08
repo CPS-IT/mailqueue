@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0c4614b496eb4caf9a3c33e05c1f625",
+    "content-hash": "4c1f6f9587a65384db5fe978875ca3e1",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -8241,16 +8241,16 @@
         },
         {
             "name": "typo3/testing-framework",
-            "version": "8.2.7",
+            "version": "8.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/testing-framework.git",
-                "reference": "7396ef0e3761da635580e3d767aa79afb2fa9f24"
+                "reference": "70c267b6a2b1fe360dea0d64f8568e8d398ea871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/testing-framework/zipball/7396ef0e3761da635580e3d767aa79afb2fa9f24",
-                "reference": "7396ef0e3761da635580e3d767aa79afb2fa9f24",
+                "url": "https://api.github.com/repos/TYPO3/testing-framework/zipball/70c267b6a2b1fe360dea0d64f8568e8d398ea871",
+                "reference": "70c267b6a2b1fe360dea0d64f8568e8d398ea871",
                 "shasum": ""
             },
             "require": {
@@ -8308,9 +8308,9 @@
             "support": {
                 "general": "https://typo3.org/support/",
                 "issues": "https://github.com/TYPO3/testing-framework/issues",
-                "source": "https://github.com/TYPO3/testing-framework/tree/8.2.7"
+                "source": "https://github.com/TYPO3/testing-framework/tree/8.3.1"
             },
-            "time": "2024-12-05T15:41:58+00:00"
+            "time": "2025-11-11T16:37:08+00:00"
         },
         {
             "name": "webmozart/assert",

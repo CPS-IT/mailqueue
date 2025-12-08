@@ -1,0 +1,1 @@
+O:42:"CPSIT\Typo3Mailqueue\Mail\TransportFailure":3:{s:9:"exception";s:53:"Symfony\Component\Mailer\Exception\TransportException";s:7:"message";s:21:"Something went wrong.";s:4:"date";O:17:"DateTimeImmutable":3:{s:4:"date";s:26:"2025-12-08 09:09:20.422932";s:13:"timezone_type";i:3;s:8:"timezone";s:13:"Europe/Berlin";}}
