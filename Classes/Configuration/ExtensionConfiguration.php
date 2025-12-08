@@ -18,7 +18,7 @@ declare(strict_types=1);
 namespace CPSIT\Typo3Mailqueue\Configuration;
 
 use CPSIT\Typo3Mailqueue\Extension;
-use TYPO3\CMS\Core;
+use mteu\TypedExtConf;
 
 /**
  * ExtensionConfiguration
@@ -26,48 +26,17 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  */
+#[TypedExtConf\Attribute\ExtensionConfig(Extension::KEY)]
 final readonly class ExtensionConfiguration
 {
-    private const DEFAULT_DELAY_THRESHOLD = 1800;
-    private const DEFAULT_ITEMS_PER_PAGE = 20;
-
+    /**
+     * @param positive-int $queueDelayThreshold
+     * @param positive-int $itemsPerPage
+     */
     public function __construct(
-        private Core\Configuration\ExtensionConfiguration $configuration,
+        #[TypedExtConf\Attribute\ExtConfProperty('queue.delayThreshold')]
+        public int $queueDelayThreshold = 1800,
+        #[TypedExtConf\Attribute\ExtConfProperty('pagination.itemsPerPage')]
+        public int $itemsPerPage = 20,
     ) {}
-
-    /**
-     * @return positive-int
-     */
-    public function getQueueDelayThreshold(): int
-    {
-        try {
-            $delayThreshold = $this->configuration->get(Extension::KEY, 'queue/delayThreshold');
-        } catch (Core\Exception) {
-            return self::DEFAULT_DELAY_THRESHOLD;
-        }
-
-        if (!is_scalar($delayThreshold)) {
-            return self::DEFAULT_DELAY_THRESHOLD;
-        }
-
-        return max(1, (int)$delayThreshold);
-    }
-
-    /**
-     * @return positive-int
-     */
-    public function getItemsPerPage(): int
-    {
-        try {
-            $itemsPerPage = $this->configuration->get(Extension::KEY, 'pagination/itemsPerPage');
-        } catch (Core\Exception) {
-            return self::DEFAULT_ITEMS_PER_PAGE;
-        }
-
-        if (!is_scalar($itemsPerPage)) {
-            return self::DEFAULT_ITEMS_PER_PAGE;
-        }
-
-        return max(1, (int)$itemsPerPage);
-    }
 }
