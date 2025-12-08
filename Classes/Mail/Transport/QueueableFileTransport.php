@@ -50,23 +50,6 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         $this->context = Core\Utility\GeneralUtility::makeInstance(Core\Context\Context::class);
     }
 
-    public function recover(int $timeout = 900): void
-    {
-        $iterator = new \DirectoryIterator($this->path);
-
-        // Remove failure metadata
-        foreach ($iterator as $file) {
-            $path = (string)$file->getRealPath();
-
-            if (str_ends_with($path, self::FILE_SUFFIX_FAILURE_DATA)) {
-                unlink($path);
-            }
-        }
-
-        // Recover stuck transports
-        parent::recover($timeout);
-    }
-
     /**
      * @throws Exception\SerializedMessageIsInvalid
      * @throws Mailer\Exception\TransportExceptionInterface
