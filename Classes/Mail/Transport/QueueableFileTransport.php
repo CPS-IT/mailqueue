@@ -51,8 +51,9 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
         string $path,
         ?EventDispatcher\EventDispatcherInterface $dispatcher = null,
         ?Log\LoggerInterface $logger = null,
+        Core\Serializer\PolymorphicDeserializer $deserializer = new Core\Serializer\PolymorphicDeserializer(),
     ) {
-        parent::__construct($path, $dispatcher, $logger);
+        parent::__construct($path, $dispatcher, $logger, $deserializer);
         $this->context = Core\Utility\GeneralUtility::makeInstance(Core\Context\Context::class);
     }
 
@@ -221,20 +222,29 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
     {
         $path = (string)$file->getRealPath();
         $lastChanged = $file->getMTime();
+        $exception = null;
 
         // Unserialize message
-        $message = unserialize((string)file_get_contents($path), [
-            'allowedClasses' => [
-                Mime\RawMessage::class,
-                Mime\Message::class,
-                Mime\Email::class,
-                Mailer\DelayedEnvelope::class,
-                Mailer\Envelope::class,
-            ],
-        ]);
+        try {
+            $message = $this->deserializer->deserialize(
+                (string)file_get_contents($path),
+                [
+                    Mailer\SentMessage::class,
+                    Mime\RawMessage::class,
+                    Mailer\Envelope::class,
+                    Mime\Address::class,
+                    Mime\Part\AbstractPart::class,
+                    Mime\Part\File::class, // This one does not extend AbstractPart
+                    Mime\Header\Headers::class,
+                    Mime\Header\HeaderInterface::class,
+                ],
+            );
+        } catch (\Throwable $exception) {
+            $message = null;
+        }
 
         if (!($message instanceof Mailer\SentMessage)) {
-            throw new Exception\SerializedMessageIsInvalid($path);
+            throw new Exception\SerializedMessageIsInvalid($path, $exception);
         }
 
         // Define mail state

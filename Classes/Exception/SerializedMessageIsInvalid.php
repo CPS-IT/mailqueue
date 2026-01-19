@@ -31,11 +31,12 @@ namespace CPSIT\Typo3Mailqueue\Exception;
  */
 final class SerializedMessageIsInvalid extends Exception
 {
-    public function __construct(string $file)
+    public function __construct(string $file, ?\Throwable $previous = null)
     {
         parent::__construct(
             sprintf('The file "%s" does not contain a valid serialized message.', $file),
             1709133596,
+            $previous,
         );
     }
 }
