@@ -226,7 +226,15 @@ final class QueueableFileTransport extends Core\Mail\FileSpool implements Recove
 
         // Unserialize message
         try {
-            $message = $this->deserializer->deserialize(
+            if (property_exists($this, 'polymorphicDeserializer')) {
+                // TYPO3 v11
+                $deserializer = $this->polymorphicDeserializer;
+            } else {
+                // TYPO3 >= v12
+                $deserializer = $this->deserializer;
+            }
+
+            $message = $deserializer->deserialize(
                 (string)file_get_contents($path),
                 [
                     Mailer\SentMessage::class,
