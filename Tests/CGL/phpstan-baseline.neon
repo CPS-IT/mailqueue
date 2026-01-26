@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			rawMessage: While loop condition is always true.
-			identifier: while.alwaysTrue
-			count: 1
-			path: ../../Classes/Command/ListQueueCommand.php
-
-		-
 			rawMessage: Cannot access offset 'MAIL' on mixed.
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
