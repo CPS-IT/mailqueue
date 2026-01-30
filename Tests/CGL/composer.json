@@ -4,7 +4,7 @@
 		"ergebnis/composer-normalize": "2.49.0",
 		"friendsofphp/php-cs-fixer": "3.93.1",
 		"phpstan/extension-installer": "1.4.3",
-		"phpstan/phpstan": "2.1.37",
+		"phpstan/phpstan": "2.1.38",
 		"phpstan/phpstan-phpunit": "2.0.12",
 		"phpstan/phpstan-symfony": "2.0.12",
 		"saschaegerer/phpstan-typo3": "2.1.1",
