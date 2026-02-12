@@ -28,6 +28,7 @@ namespace CPSIT\Typo3Mailqueue\Iterator;
 final class LimitedFileIterator extends \FilterIterator
 {
     /**
+     * @param \Iterator<\SplFileInfo> $iterator
      * @param list<string> $acceptedSuffixes
      */
     public function __construct(
