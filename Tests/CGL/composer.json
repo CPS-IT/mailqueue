@@ -5,7 +5,7 @@
 		"friendsofphp/php-cs-fixer": "3.94.0",
 		"phpstan/extension-installer": "1.4.3",
 		"phpstan/phpstan": "2.1.39",
-		"phpstan/phpstan-phpunit": "2.0.15",
+		"phpstan/phpstan-phpunit": "2.0.16",
 		"phpstan/phpstan-symfony": "2.0.14",
 		"saschaegerer/phpstan-typo3": "2.1.1",
 		"shipmonk/composer-dependency-analyser": "1.8.4",
