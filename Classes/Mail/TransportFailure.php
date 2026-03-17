@@ -60,7 +60,8 @@ final class TransportFailure
         }
 
         $failure = unserialize((string)file_get_contents($file), [
-            'allowedClasses' => [
+            'allowed_classes' => [
+                self::class,
                 \DateTimeImmutable::class,
             ],
         ]);
