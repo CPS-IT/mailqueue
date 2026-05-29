@@ -2,7 +2,7 @@
 	"require-dev": {
 		"armin/editorconfig-cli": "2.2.1",
 		"ergebnis/composer-normalize": "2.52.0",
-		"friendsofphp/php-cs-fixer": "3.95.2",
+		"friendsofphp/php-cs-fixer": "3.95.3",
 		"phpstan/extension-installer": "1.4.3",
 		"phpstan/phpstan": "2.2.1",
 		"phpstan/phpstan-phpunit": "2.0.16",
