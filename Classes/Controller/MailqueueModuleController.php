@@ -26,6 +26,7 @@ use Psr\Http\Message;
 use Symfony\Component\Mailer;
 use TYPO3\CMS\Backend;
 use TYPO3\CMS\Core;
+use TYPO3\CMS\Core\Imaging\IconSize;
 
 /**
  * MailqueueModuleController
@@ -222,7 +223,7 @@ final class MailqueueModuleController
                 ['node' => ['MAIL' => 1], 'tree' => 'confVars'],
             )
         );
-        $button->setIcon($this->iconFactory->getIcon('actions-cog', Core\Imaging\Icon::SIZE_SMALL));
+        $button->setIcon($this->iconFactory->getIcon('actions-cog', IconSize::SMALL));
         $button->setTitle(self::translate('button.config'));
         $button->setShowLabelText(true);
 
