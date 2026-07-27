@@ -33,7 +33,7 @@ final class LimitedFileIteratorTest extends TestingFramework\Core\Unit\UnitTestC
     #[Framework\Attributes\Test]
     public function iteratorReturnsOnlyFilesWithAcceptedSuffixes(): void
     {
-        $directory = \dirname(__DIR__) . '/Fixtures/Messages';
+        $directory = dirname(__DIR__) . '/Fixtures/Messages';
         $subject = new Src\Iterator\LimitedFileIterator(
             new \DirectoryIterator($directory),
             [
@@ -55,7 +55,7 @@ final class LimitedFileIteratorTest extends TestingFramework\Core\Unit\UnitTestC
             $actual[] = $fileInfo->getRealPath();
         }
 
-        \sort($actual);
+        sort($actual);
 
         self::assertSame($expected, $actual);
     }

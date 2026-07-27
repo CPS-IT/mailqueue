@@ -58,9 +58,9 @@ final class TransportFailureTest extends TestingFramework\Core\Unit\UnitTestCase
     #[Framework\Attributes\Test]
     public function fromFileThrowsExceptionIfSerializedMetadataIsInvalid(): void
     {
-        $file = \tempnam(sys_get_temp_dir(), 'mailqueue-tests-');
+        $file = tempnam(sys_get_temp_dir(), 'mailqueue-tests-');
 
-        file_put_contents($file, \serialize('foo'));
+        file_put_contents($file, serialize('foo'));
 
         $this->expectExceptionObject(
             new Src\Exception\SerializedFailureMetadataIsInvalid($file),
@@ -68,23 +68,23 @@ final class TransportFailureTest extends TestingFramework\Core\Unit\UnitTestCase
 
         Src\Mail\TransportFailure::fromFile($file);
 
-        \unlink($file);
+        unlink($file);
     }
 
     #[Framework\Attributes\Test]
     public function fromFileReturnsUnserializedFileMetadata(): void
     {
-        $file = \tempnam(sys_get_temp_dir(), 'mailqueue-tests-');
+        $file = tempnam(sys_get_temp_dir(), 'mailqueue-tests-');
         $failure = new Src\Mail\TransportFailure(
             Mailer\Exception\TransportException::class,
             'Something went wrong.',
             new \DateTimeImmutable(),
         );
 
-        file_put_contents($file, \serialize($failure));
+        file_put_contents($file, serialize($failure));
 
         self::assertEquals($failure, Src\Mail\TransportFailure::fromFile($file));
 
-        \unlink($file);
+        unlink($file);
     }
 }

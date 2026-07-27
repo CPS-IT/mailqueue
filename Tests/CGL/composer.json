@@ -48,7 +48,7 @@
 			"@lint:php"
 		],
 		"lint:composer": "@fix:composer --dry-run",
-		"lint:editorconfig": "ec",
+		"lint:editorconfig": "ec --dir=../../ --git-only",
 		"lint:php": "@fix:php --dry-run",
 		"migration": [
 			"@migration:rector"

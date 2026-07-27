@@ -29,6 +29,19 @@ indent_size = 2
 indent_size = 2
 indent_style = tab
 
+#.eslintrc.json
+[.eslintrc.json]
+indent_size = 2
+indent_style = space
+
+# stylelint
+[.stylelintrc]
+indent_size = 2
+
+# package.json
+[package.json]
+indent_size = 2
+
 # TypoScript
 [*.{typoscript,tsconfig}]
 indent_size = 2
