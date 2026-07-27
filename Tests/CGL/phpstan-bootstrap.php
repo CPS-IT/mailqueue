@@ -18,5 +18,5 @@ declare(strict_types=1);
 use Composer\Autoload\ClassLoader;
 
 /** @var ClassLoader $classLoader */
-$classLoader = require \dirname(__DIR__, 2) . '/.Build/vendor/autoload.php';
+$classLoader = require dirname(__DIR__, 2) . '/.Build/vendor/autoload.php';
 $classLoader->register(true);
