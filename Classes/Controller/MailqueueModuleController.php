@@ -47,10 +47,12 @@ final class MailqueueModuleController
         private readonly Core\Mail\Mailer $mailer,
         private readonly Backend\Routing\UriBuilder $uriBuilder,
         private readonly Core\Context\Context $context,
+        private readonly Core\Page\PageRenderer $pageRenderer,
     ) {}
 
     public function __invoke(Message\ServerRequestInterface $request): Message\ResponseInterface
     {
+        $this->pageRenderer->loadJavaScriptModule('@typo3/backend/modal.js');
         $page = $this->resolvePageIdFromRequest($request);
 
         // Force redirect when page selector was used
