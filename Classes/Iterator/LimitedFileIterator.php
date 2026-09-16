@@ -23,12 +23,12 @@ namespace CPSIT\Typo3Mailqueue\Iterator;
  * @author Elias Häußler <e.haeussler@familie-redlich.de>
  * @license GPL-2.0-or-later
  *
- * @extends \FilterIterator<int, \SplFileInfo, \Traversable<\SplFileInfo>>
+ * @extends \FilterIterator<int, \SplFileInfo, \Traversable<int, \SplFileInfo>>
  */
 final class LimitedFileIterator extends \FilterIterator
 {
     /**
-     * @param \Iterator<\SplFileInfo> $iterator
+     * @param \Iterator<int, \SplFileInfo> $iterator
      * @param list<string> $acceptedSuffixes
      */
     public function __construct(
