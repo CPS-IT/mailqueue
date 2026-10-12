@@ -72,7 +72,6 @@ final class ListQueueCommand extends Console\Command\Command
         $watch = $input->getOption('watch');
 
         $transport = $this->mailer->getTransport();
-        $hasFailures = false;
 
         // Early return if unsupported mail transport is configured
         if (!($transport instanceof Mail\Transport\QueueableTransport)) {
@@ -97,11 +96,10 @@ final class ListQueueCommand extends Console\Command\Command
             $section = $output->section();
 
             $this->io = new Console\Style\SymfonyStyle($input, $section);
-
             $this->watchForQueueUpdates($section, $transport);
-        } else {
-            $hasFailures = $this->decorateMailQueue($transport->getMailQueue());
         }
+
+        $hasFailures = $this->decorateMailQueue($transport->getMailQueue());
 
         if ($strict && $hasFailures) {
             return self::FAILURE;
