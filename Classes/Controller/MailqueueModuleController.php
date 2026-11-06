@@ -133,8 +133,8 @@ final class MailqueueModuleController
     private function resolveTemplateVariables(
         Mail\Transport\QueueableTransport $transport,
         int $currentPageNumber = 1,
-        string $sendId = null,
-        string $deleteId = null,
+        ?string $sendId = null,
+        ?string $deleteId = null,
     ): array {
         $failing = false;
         $longestPendingInterval = 0;
