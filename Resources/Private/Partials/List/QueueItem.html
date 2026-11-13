@@ -5,15 +5,11 @@
 
 <tr class="{f:render(section: 'rowClass', arguments: {state: queueItem.state, date: queueItem.date, delayThreshold: delayThreshold}) -> f:spaceless()}">
     <td class="col-icon align-top">
-        <f:render partial="Modal/ConfirmDelete" arguments="{queueItem: queueItem, iterator: iterator}" />
 
         <f:switch expression="{queueItem.state.value}">
             <f:case value="failed">
                 <span class="badge badge-danger d-block">{f:translate(key: 'queueItem.state.failed', extensionName: 'Mailqueue')}</span>
 
-                <f:if condition="{queueItem.failure}">
-                    <f:render partial="Modal/TransportFailureDetails" arguments="{queueItem: queueItem, iterator: iterator}" />
-                </f:if>
             </f:case>
             <f:case value="queued">
                 <f:if condition="{queueItem.date} && {queueItem.date -> m:dateInterval()} >= {delayThreshold}">
@@ -69,20 +65,37 @@
     <td class="align-top nowrap col-control">
         <div class="btn-group">
             <f:if condition="{queueItem.state.value} == 'failed' && {queueItem.failure}">
-                <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#queue-item-{iterator.cycle}-info-modal"
-                        title="{f:translate(key: 'button.info', extensionName: 'Mailqueue')}"
+                <a class="btn btn-default btn-sm t3js-modal-trigger"
+                   href="{f:be.uri(route: 'system_mailqueue', parameters: '{send: queueItem.id}')}"
+                   data-severity="error"
+                   data-title="{f:translate(key: 'modal.failureDetails.header', extensionName: 'Mailqueue')}"
+                   data-content="{queueItem.failure.exception}: {queueItem.failure.message} ({queueItem.id})"
+                   data-button-close-text="{f:translate(key: 'aria.close', extensionName: 'Mailqueue')}"
+                   data-button-ok-text="{f:translate(key: 'button.retry', extensionName: 'Mailqueue')}"
+                   title="{f:translate(key: 'button.info', extensionName: 'Mailqueue')}"
                 >
                     <c:icon identifier="actions-info" />
-                </button>
+                </a>
             </f:if>
 
-            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#queue-item-{iterator.cycle}-delete-modal"
-                    title="{f:translate(key: 'button.delete', extensionName: 'Mailqueue')}"
+            <f:variable name="mailSubject">
+                <f:if condition="{queueItem.message.message.subject}">
+                    <f:then>{queueItem.message.message.subject}</f:then>
+                    <f:else if="{queueItem.message.originalMessage.subject}">{queueItem.message.originalMessage.subject}</f:else>
+                    <f:else>{f:translate(key: 'queueItem.subject.unknown', extensionName: 'Mailqueue')}</f:else>
+                </f:if>
+            </f:variable>
+            <a class="btn btn-default btn-sm t3js-modal-trigger"
+               href="{f:be.uri(route: 'system_mailqueue', parameters: '{delete: queueItem.id}')}"
+               data-severity="warning"
+               data-title="{f:translate(key: 'modal.delete.header', extensionName: 'Mailqueue')}"
+               data-content="{f:translate(key: 'modal.delete.text', extensionName: 'Mailqueue', arguments: '{0: mailSubject}')}"
+               data-button-close-text="{f:translate(key: 'button.cancel', extensionName: 'Mailqueue')}"
+               data-button-ok-text="{f:translate(key: 'button.delete', extensionName: 'Mailqueue')}"
+               title="{f:translate(key: 'button.delete', extensionName: 'Mailqueue')}"
             >
                 <c:icon identifier="actions-delete" />
-            </button>
+            </a>
 
             <f:be.link route="system_mailqueue" parameters="{send: queueItem.id}" class="btn btn-default btn-sm"
                        title="{f:translate(key: 'button.send', extensionName: 'Mailqueue')}"
